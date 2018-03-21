@@ -57,6 +57,8 @@ class RegisterController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'birthday' => 'required',
+            'gender' => 'required',
         ]);
     }
 
@@ -74,6 +76,8 @@ class RegisterController extends Controller
             'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'birthday' => $data['birthday'],
+            'gender' => $data['gender'],
             'verifyToken' => Str::random(40),
         ]);
         $thisUser = User::findOrFail($user->id);
@@ -89,10 +93,10 @@ class RegisterController extends Controller
         return view('email.verify');
     }
 
-    public function sendEmailDone($email, $token){
-        $user = User::where(['email'=>$email, 'verifyToken'=>$token])->first();
+    public function sendEmailDone($token){
+        $user = User::where('verifyToken',$token)->first();
         if($user){
-            $result = User::where(['email'=>$email, 'verifyToken'=>$token])->update(['status'=>'1', 'verifyToken'=>NULL]);
+            $result = User::where('verifyToken',$token)->update(['status'=>'1', 'verifyToken'=>NULL]);
             if($result == 1){
                 Session::flash('status', 'Successfully verify your email');
             }else{
