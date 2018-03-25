@@ -14,7 +14,20 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="post_title" placeholder="Title">
+                        </div>
+
+                        <div class="form-group">
+                            <textarea name="post_desc" class="form-control" placeholder="Write your story"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Post</button>
+                        </div>    
+                    </form>
+
                 </div>
             </div>
         </div>

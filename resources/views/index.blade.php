@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Joinventure - Log in or Sign in</title>
+    <title>Joinventure - Log in or Sign up</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Signika:400" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
@@ -162,14 +162,14 @@
                 @csrf
                 <div class="row">
                     <div class="col">
-                       <input name="email" class="form-control small-input {{ $errors->has('email') ? ' is-invalid' : '' }}" type="email" placeholder="E-mail" value="{{ old('email') }}" required autofocus> 
+                       <input name="email_log" class="form-control small-input {{ $errors->has('email_log') ? ' is-invalid' : '' }}" type="email" placeholder="E-mail" value="{{ old('email_log') }}" required autofocus> 
                     </div>
                     <div class="col">
                        <input name="password" class="form-control small-input {{ $errors->has('password') ? ' is-invalid' : '' }}" type="password" placeholder="Password" required autofocus> 
                     </div>
                     <button class="btn btn-success btn-sm pl-4 pr-4 buttonRounded" type="submit">Login</button>
                     <div class="w-100"></div>
-                    <div class="col">
+                    <div class="col"> 
                        <a href="#" style="font-size: 12px">Forgot Your Password?</a>
                     </div>
                     <div class="col">

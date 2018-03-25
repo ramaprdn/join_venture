@@ -12,8 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('login_register');
-});
+    return view('index');
+})->middleware('guest');
 
 Auth::routes();
 
@@ -23,3 +23,5 @@ Route::get('/verifyEmail', 'Auth\RegisterController@verifyEmail')->name('verifyE
 Route::get('verify/{token}', 'Auth\RegisterController@sendEmailDone')->name('sendEmailDone');
 Route::get('/follow/{friend_id}', 'FollowUnfollow@followFriend');
 Route::get('/unfollow/{friend_id}', 'FollowUnfollow@unfollowFriend');
+Route::get('/profile', 'UserController@show_profile_view')->name('profile')->middleware('auth');
+Route::put('/profile/update', 'UserController@update')->name('update_profile')->middleware('auth');
