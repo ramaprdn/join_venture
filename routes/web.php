@@ -25,3 +25,5 @@ Route::get('/follow/{friend_id}', 'FollowUnfollow@followFriend');
 Route::get('/unfollow/{friend_id}', 'FollowUnfollow@unfollowFriend');
 Route::get('/profile', 'UserController@show_profile_view')->name('profile')->middleware('auth');
 Route::put('/profile/update', 'UserController@update')->name('update_profile')->middleware('auth');
+Route::resource('/post', 'PostController');
+Route::post('/post/image', 'PostController@insertImage')->name('insertImage');

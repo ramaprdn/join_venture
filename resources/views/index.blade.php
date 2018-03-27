@@ -150,7 +150,7 @@
         
     </div>
 
-    <nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light justify-content-between" style="background-color: #fff !important; box-shadow: 0 0.5px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+    <nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light justify-content-between" style="background-color: #fff !important; box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);">
         <a class="navbar-brand ml-3 mr-5 navFont" href="#"><b style="color: #5c8e2f">JOINVENTURE</b></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -165,7 +165,7 @@
                        <input name="email_log" class="form-control small-input {{ $errors->has('email_log') ? ' is-invalid' : '' }}" type="email" placeholder="E-mail" value="{{ old('email_log') }}" required autofocus> 
                     </div>
                     <div class="col">
-                       <input name="password" class="form-control small-input {{ $errors->has('password') ? ' is-invalid' : '' }}" type="password" placeholder="Password" required autofocus> 
+                       <input name="password_log" class="form-control small-input {{ $errors->has('password_log') ? ' is-invalid' : '' }}" type="password" placeholder="Password" required autofocus> 
                     </div>
                     <button class="btn btn-success btn-sm pl-4 pr-4 buttonRounded" type="submit">Login</button>
                     <div class="w-100"></div>
@@ -198,7 +198,8 @@
                 <form action="{{ route('register') }}" method="post">
                     @csrf
 
-                    <div class="row">
+                    <div class="form-group">
+                      <div class="form-row">
                         <div class="form-group col-md-6 col-sm-12">
                             <input type="text" class="form-control {{ $errors->has('first_name') ? ' is-invalid' : '' }}" id="first_name" name="first_name" placeholder="First Name" value="{{ old('first_name') }}" required autofocus>
                         </div>
@@ -206,17 +207,37 @@
                         <div class="form-group col-md-6 col-sm-12">
                             <input type="text" class="form-control {{ $errors->has('last_name') ? ' is-invalid' : '' }}" id="last_name" name="last_name" placeholder="Last Name" value="{{ old('last_name') }}" required autofocus>
                         </div>
+                      </div>
+
+                      @if ($errors->has('first_name') || $errors->has('last_name'))
+                        <span class="invalid-feedback">
+                            <strong>{{ $errors->first('first_name') }} {{ $errors->first('last_name') }}</strong>
+                        </span>
+                      @endif
                     </div>
 
                     <div class="form-group">
                         <input type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" name="email" aria-describedby="emailHelp" placeholder="Email Address" value="{{ old('email') }}" required>
+
+                        @if ($errors->has('email'))
+                          <div class="invalid-feedback">
+                              <strong>{{ $errors->first('email') }}</strong>
+                          </div>
+                        @endif
                     </div>
 
                     <div class="form-group">
                         <input type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" id="password" name="password" placeholder="Password" required>
+
+                        @if ($errors->has('password'))
+                          <div class="invalid-feedback">
+                              <strong>{{ $errors->first('password') }}</strong>
+                          </div>
+                        @endif
                     </div>
+
                     <div class="form-group">
-                        <input type="password" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
+                        <input type="password" id="password-confirm" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
                     </div>
 
                     <div class="form-group">

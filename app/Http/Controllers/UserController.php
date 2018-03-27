@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Kabupaten;
+use App\District;
 use App\User;
 use Auth;
 
 class UserController extends Controller
 {
     public function show_profile_view(){
-    	$kabupaten = Kabupaten::all();
+    	$kabupaten = District::all();
     	// return $kabupaten;
     	return view('user.profile', compact('kabupaten'));
     }

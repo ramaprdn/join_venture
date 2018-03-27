@@ -66,18 +66,30 @@
 <body>
     <nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light justify-content-between" style="background-color: #fff !important; box-shadow: 0 0.5px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
       <div class="navbar-header">
-        <a class="navbar-brand ml-3 mr-5 navFont" href="#"><b style="color: #5c8e2f">JOINVENTURE</b></a>
+        <a class="navbar-brand ml-3 mr-5 navFont" href="/"><b style="color: #5c8e2f">JOINVENTURE</b></a>
       </div>
     </nav>
 
 
     <div class="container" style="margin-top:150px;"> 
       <div class="card" style="max-width:500px; margin: 0 auto; border-radius: 25px;">
+
         <div class="col-sm-12 title navFont">
           <h4>login</h4>
         </div>
           
         <div class="col-sm-12" style="margin-bottom: 24px;">
+
+          
+            @if(session('status'))
+              <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 25px !important;">
+              {{session('status')}}
+
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            @endif
           <form action="{{ route('login') }}" method="post">
             @csrf
             <input type="text" class="form-control {{ session()->has('email') ? ' is-invalid' : '' }}" name="email_log" placeholder="Email Address" required autofocus>
@@ -88,12 +100,13 @@
                 </span>
             @endif
 
-            <input type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Password" required autofocus>
+            <input type="password" class="form-control {{ $errors->has('password_log') ? ' is-invalid' : '' }}" name="password_log" placeholder="Password" required autofocus>
 
             <button type="submit" class="btn btn-success btn-block" style="border-radius:25px; margin-top:20px;">login</button>
 
-            <div class="col-sm-12" style="text-align:center; margin-top:10px;">
-              <a href="/" >Sign up for JoinVenture</a>  
+            <div class="col-sm-12" style="margin-top:10px;">
+              <a href="/password/reset" class="pull-left">Forget Password</a>
+              <a href="/" class="pull-right">Sign up for JoinVenture</a>
             </div>
             
           </form>
