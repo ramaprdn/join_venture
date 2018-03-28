@@ -241,7 +241,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="birthday">Birthday</label>
+                        <label for="birthday">Date of Birth</label>
                         <input type="date" class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}" name="birthday" required value="{{ old('birthday') }}" id="birthday">
                     </div>
 
