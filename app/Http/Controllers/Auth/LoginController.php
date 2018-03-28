@@ -38,6 +38,24 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function showLoginForm()
+    {
+        return view('auth.login2');
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        $request->session()->flash('email', 'the account you entered is not in our records');
+        return redirect('/login')->withMessages([
+            $this->username() => [trans('auth.failed')],
+        ]);
+    }
+
+    public function username()
+    {
+        return 'email_log';
+    }
+
      /**
      * Get the needed authorization credentials from the request.
      *
