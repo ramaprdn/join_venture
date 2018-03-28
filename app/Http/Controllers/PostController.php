@@ -116,7 +116,7 @@ class PostController extends Controller
     public function getImagePost($post_id){
         $images = Postimage::where('post_id', $post_id)->get();
         if (sizeof($images) > 0) {
-            return view('ajax.image_post', compact('images'));
+            return view('ajax.post.image', compact('images'));
         }
         return null;
         

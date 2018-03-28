@@ -21,7 +21,7 @@ JoinVenture - Home
 		max-height: 100px;	
 	}
 </style>
-<script type="text/javascript">
+<script type="text/javascript" async>
 	function getPostImage(post_id){
 		var url = '/post/image/' + post_id;
 		var div_class = 'imagelist' + post_id;
@@ -35,6 +35,21 @@ JoinVenture - Home
 				alert('gagal');
 			}
 		})
+	}
+
+	function loadComment(post_id){
+		var url = 'api/comment/' + post_id;
+
+		$.ajax({
+			type:'get',
+			url:url,
+			success: function(data){
+				$('#comments'+post_id).html(data);
+			},
+			error: function(){
+				alert("error collecting comment");
+			}
+		});
 	}
 </script>
 @endsection
@@ -98,6 +113,7 @@ JoinVenture - Home
 	                    </div>
 	                    <script type="text/javascript">
 	                    	getPostImage({{ $post->id }});
+	                    	loadComment({{ $post->id }});
 	                    </script>
 	                    <div class="imagelist" id="imagelist{{ $post->id }}">
 	                    	
@@ -109,9 +125,13 @@ JoinVenture - Home
                     			<input id="comment{{ $post->id }}" type="text" name="comment" class="form-control" placeholder="comment">
                     		</div>
                     		<div class="col-sm-2">
-                    			<button type="button" class="btn btn-success" onclick="sendComment({{ $post->id }})">Send</button>
+                    			<button type="button" class="btn btn-success" onclick="sendComment({{ $post->id.",".Auth::user()->id }})">Send</button>
                     		</div>
 	                    </div>
+
+	                  	<div class="row col-sm-12 mt-4" id="comments{{ $post->id }}">
+	                  		
+	                  	</div>
 	                </div>
 	            </div>
             @endforeach()
@@ -140,7 +160,7 @@ JoinVenture - Home
 
 @section('script')
 <script type="text/javascript" src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
-<script type="text/javascript">
+<script type="text/javascript" async>
 
 
 	function insert_post(){
@@ -177,18 +197,20 @@ JoinVenture - Home
 		previewImage(this);
 	});
 
-	function sendComment(post_id){
-		var url = 'api/comment/store';
+	function sendComment(post_id, user_id){
+		var url = '/api/comment/store';
 		var comment = $('#comment' + post_id).val();
-		var params = "?comment=" + comment;
+		var params = "?comment=" + comment + "&post_id=" + post_id + "&user_id=" + user_id;
+		var fullUrl = url + params;
+		$('#comment' + post_id).val('');
 		$.ajax({
 			type:'get',
-			url:url+params,
+			url:fullUrl,
 			success: function(data){
-				alert(data);
+				loadComment(post_id);
 			},
 			error: function(){
-				alert('error');
+				alert('error saving comment');
 			}
 		});
 	}

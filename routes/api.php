@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/comment/store', 'CommentController@sendComment');
+Route::get('/comment/{post_id}', 'CommentController@loadComment');
