@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Signika:400" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     <style>
         .buttonRounded {
             border-radius: 25px;
@@ -67,7 +68,7 @@
 
     @yield('section')
 
-	<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+	
     @yield('script')
 </body>
 </html>

@@ -98,7 +98,7 @@ class PostController extends Controller
 
     public function insertImage(Request $request){
         $last_user_post = Post::where('user_id',Auth::user()->id)->orderBy('created_at', 'desc')->first();
-        
+
         $images = $request->file('image_post');
 
         if ($images) {
@@ -114,5 +114,14 @@ class PostController extends Controller
 
         return redirect(route('home'));
 
+    }
+
+    public function getImagePost($post_id){
+        $images = Postimage::where('post_id', $post_id)->get();
+        if (sizeof($images) > 0) {
+            return view('ajax.image_post', compact('images'));
+        }
+        return null;
+        
     }
 }

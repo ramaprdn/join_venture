@@ -7,6 +7,7 @@ JoinVenture - Home
 @section('css')
 <link href="{{ asset('dist/emojionearea.css') }}" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.fancybox.min.css') }}">
+
 <style type="text/css">
 	.img-preview{
 		max-height: 100px;
@@ -16,7 +17,27 @@ JoinVenture - Home
 	.image_emoticon > img{
 		max-height: 18px;
 	}
+
+	.imagelist > a > img{
+		max-height: 100px;	
+	}
 </style>
+<script type="text/javascript">
+	function getPostImage(post_id){
+		var url = '/post/image/' + post_id;
+		var div_class = 'imagelist' + post_id;
+		$.ajax({
+			type:'get',
+			url:url,
+			success:function(data){
+				$('#' + div_class).html(data);
+			},
+			error: function(){
+				alert('gagal');
+			}
+		})
+	}
+</script>
 @endsection
 
 @section('section')
@@ -76,10 +97,12 @@ JoinVenture - Home
 	                    <div class="image_emoticon">
 	                    	{!! $post->description !!}	
 	                    </div>
-
-	                    <p class="imagelist">
+	                    <script type="text/javascript">
+	                    	getPostImage({{ $post->id }});
+	                    </script>
+	                    <div class="imagelist" id="imagelist{{ $post->id }}">
 	                    	
-	                    </p>
+	                    </div>
 	                </div>
 	                <div class="card-footer">
 	                    <small class="text-muted">Last updated 3 mins ago</small>
@@ -113,12 +136,12 @@ JoinVenture - Home
 <script src="{{ asset('dist/emojionearea.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
 <script type="text/javascript">
+
+
 	$(document).ready(function(){
 		$('#post').emojioneArea({
             pickerPosition: "bottom"
         });
-
-        
 	});
 
 	function insert_post(){
