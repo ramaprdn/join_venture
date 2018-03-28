@@ -5,7 +5,6 @@ JoinVenture - Home
 @endsection
 
 @section('css')
-<link href="{{ asset('dist/emojionearea.css') }}" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.fancybox.min.css') }}">
 
 <style type="text/css">
@@ -61,7 +60,7 @@ JoinVenture - Home
         
         <div class="col-lg-6 col-sm-12">
             <div class="card">
-            	<form action="/post/image" method="POST" enctype="multipart/form-data" onsubmit="insert_post()">
+            	<form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
 	        		@csrf
 	        		<div class="card-body">
 	                    <div class="row">
@@ -69,7 +68,7 @@ JoinVenture - Home
 	                            <div style="height: 70px; width: 70px; border-radius: 50px; background-color: #000"></div>                                
 	                        </div>
 	                        <div class="form-group col-lg-10">
-	                            <textarea class="form-control bg-light" name="test" id="post" rows="4" placeholder="Where have you been, {{Auth::user()->first_name}}?" required></textarea>
+	                            <textarea class="form-control bg-light" name="description" id="post" rows="4" placeholder="Where have you been, {{Auth::user()->first_name}}?" required></textarea>
 	                        </div>
 	                         
 	                    </div>
@@ -87,7 +86,7 @@ JoinVenture - Home
             <br>
 
             @foreach($user_friend_post as $post)
-            	<div class="card">
+            	<div class="card mb-2">
 	                <div class="card-body">
 	                    <h5 class="card-title">{{ $post->first_name." ".$post->last_name}}</h5>
 	                    @php
@@ -105,7 +104,14 @@ JoinVenture - Home
 	                    </div>
 	                </div>
 	                <div class="card-footer">
-	                    <small class="text-muted">Last updated 3 mins ago</small>
+	                    <div class="row">
+                    		<div class="col-sm-10">
+                    			<input id="comment{{ $post->id }}" type="text" name="comment" class="form-control" placeholder="comment">
+                    		</div>
+                    		<div class="col-sm-2">
+                    			<button type="button" class="btn btn-success" onclick="sendComment({{ $post->id }})">Send</button>
+                    		</div>
+	                    </div>
 	                </div>
 	            </div>
             @endforeach()
@@ -133,16 +139,9 @@ JoinVenture - Home
 @endsection
 
 @section('script')
-<script src="{{ asset('dist/emojionearea.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
 <script type="text/javascript">
 
-
-	$(document).ready(function(){
-		$('#post').emojioneArea({
-            pickerPosition: "bottom"
-        });
-	});
 
 	function insert_post(){
 		var description = $('.emojionearea-editor').html();
@@ -177,6 +176,22 @@ JoinVenture - Home
 		$('#previewImage').html('');
 		previewImage(this);
 	});
+
+	function sendComment(post_id){
+		var url = 'api/comment/store';
+		var comment = $('#comment' + post_id).val();
+		var params = "?comment=" + comment;
+		$.ajax({
+			type:'get',
+			url:url+params,
+			success: function(data){
+				alert(data);
+			},
+			error: function(){
+				alert('error');
+			}
+		});
+	}
 
 	
 </script>

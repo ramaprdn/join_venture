@@ -47,6 +47,22 @@ class PostController extends Controller
         $post->user_id = Auth::user()->id;
         $post->description = $request->description;
         $post->save();
+
+        $last_user_post = Post::where('user_id',Auth::user()->id)->orderBy('created_at', 'desc')->first();
+
+        $images = $request->file('image_post');
+
+        if ($images) {
+            foreach ($images as $key => $image) {
+                $imageName = $last_user_post->id . "_" . "$key" . "_" . $last_user_post->user_id . "." . $image->getClientOriginalExtension();
+                $postImage = new Postimage();
+                $postImage->post_id = $last_user_post->id;
+                $postImage->img_name = $imageName;
+                $image->move(public_path('img/post'), $imageName);
+                $postImage->save();
+            }   
+        }
+
         return redirect(route('home'));
 
     }
@@ -96,25 +112,6 @@ class PostController extends Controller
         //
     }
 
-    public function insertImage(Request $request){
-        $last_user_post = Post::where('user_id',Auth::user()->id)->orderBy('created_at', 'desc')->first();
-
-        $images = $request->file('image_post');
-
-        if ($images) {
-            foreach ($images as $key => $image) {
-                $imageName = $last_user_post->id . "_" . "$key" . "_" . $last_user_post->user_id . "." . $image->getClientOriginalExtension();
-                $postImage = new Postimage();
-                $postImage->post_id = $last_user_post->id;
-                $postImage->img_name = $imageName;
-                $image->move(public_path('img/post'), $imageName);
-                $postImage->save();
-            }   
-        }
-
-        return redirect(route('home'));
-
-    }
 
     public function getImagePost($post_id){
         $images = Postimage::where('post_id', $post_id)->get();
