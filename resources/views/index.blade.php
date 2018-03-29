@@ -12,6 +12,7 @@
     <style>
         body{
             margin-top: 50px;
+            margin-bottom: 50px;
             background-image: url({{asset('img/bg-01-01.jpg')}});
             background-position: center;
             background-size: cover;
@@ -24,7 +25,7 @@
         }
         
         .buttonRounded {
-            border-radius: 25px;
+            border-radius: 30px;
         }
 
         .cardRadius {
@@ -37,9 +38,6 @@
             border-radius: 0.25rem;
             max-width: 100%;
             height: auto;
-        }
-        input{
-            border-radius: 25px !important;
         }
 
         .small-input{
@@ -161,106 +159,130 @@
             <form action="{{ route('login') }}" method="post">
                 @csrf
                 <div class="row">
-                    <div class="col">
-                       <input name="email_log" class="form-control small-input {{ $errors->has('email_log') ? ' is-invalid' : '' }}" type="email" placeholder="E-mail" value="{{ old('email_log') }}" required autofocus> 
+                    <div class="col-sm-5">
+                      <input name="email_log" class="form-control small-input {{ $errors->has('email_log') ? ' is-invalid' : '' }}" type="email" placeholder="E-mail" value="{{ old('email_log') }}" required autofocus>
+                      <a href="#" style="font-size: 12px">Forgot Your Password?</a>
                     </div>
-                    <div class="col">
-                       <input name="password_log" class="form-control small-input {{ $errors->has('password_log') ? ' is-invalid' : '' }}" type="password" placeholder="Password" required autofocus> 
-                    </div>
-                    <button class="btn btn-success btn-sm pl-4 pr-4 buttonRounded" type="submit">Login</button>
-                    <div class="w-100"></div>
-                    <div class="col"> 
-                       <a href="#" style="font-size: 12px">Forgot Your Password?</a>
-                    </div>
-                    <div class="col">
-                        <div class="form-check">
+                    <div class="col-sm-5">
+                      <input name="password_log" class="form-control small-input {{ $errors->has('password_log') ? ' is-invalid' : '' }}" type="password" placeholder="Password" required autofocus>
+                      <div class="form-check">
                             <input class="form-check-input" type="checkbox" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
                             <label class="form-check-label" style="font-size: 12px;"  for="remember">Remember Me</label>
                         </div>
                     </div>
+                    <div class="col-sm-2">
+                      <button class="btn btn-success btn-sm pl-4 pr-4 buttonRounded" type="submit">Login</button>  
+                    </div>
+                    
                 </div>
             </form>
         </div>
     </nav>
 
 
-    <div class="d-flex justify-content-end mx-5" style="margin-top: 100px;">
+    <div class="row mx-3" style="margin-top: 150px;">
+        <div class="col col-md-7 col-xl-9" style="margin-top: 50px;">
+            <h1 class="text-center" style="color: #5c8e2f"><b>Where you can find your venture partner</b></h1>
+            <div class="row" style="margin-top: 100px; opacity: 0.5;">
+                <div class="col-sm-12 col-md-4">
+                    <img style="max-width: 200px; margin: 0 auto; display: block;" src="{{asset('img/community.png')}}">
+                    <br>
+                    <h5><center><b>Conecting people</b></center></h5>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <img style="max-width: 200px; margin: 0 auto; display: block;" src="{{asset('img/map.png')}}">
+                    <br>
+                    <h5><center><b>Make your own story</b></center></h5>
+                </div>
+                <div class="col-sm-12 col-md-4 ">
+                    <img style="max-width: 200px; margin: 0 auto; display: block;" src="{{asset('img/idea.png')}}">
+                    <br>
+                    <h5><center><b>Get some fresh idea</b></center></h5>
+                </div>
+            </div>          
+        </div>
+        <div class="col  col-sm-12 col-md-5 col-xl-3 d-flex justify-content-center">
+            <div class="card" style="width: 27rem; border-radius: 25px !important;">
+                <div class="cardRadius card-body">
+                    <h4 class="card-title text-center"><b>JOIN FOR FREE!</b></h4>
+                    <br>
+                    <form action="{{ route('register') }}" method="post">
+                        @csrf
+
+                        <div class="form-group">
+                          <div class="form-row">
+                            <div class="form-group col-md-6 col-sm-12">
+                                <input type="text" class="form-control {{ $errors->has('first_name') ? ' is-invalid' : '' }}" id="first_name" name="first_name" placeholder="First Name" value="{{ old('first_name') }}" required autofocus>
+                            </div>
+
+                            <div class="form-group col-md-6 col-sm-12">
+                                <input type="text" class="form-control {{ $errors->has('last_name') ? ' is-invalid' : '' }}" id="last_name" name="last_name" placeholder="Last Name" value="{{ old('last_name') }}" required autofocus>
+                            </div>
+                          </div>
+
+                          @if ($errors->has('first_name') || $errors->has('last_name'))
+                            <span class="invalid-feedback">
+                                <strong>{{ $errors->first('first_name') }} {{ $errors->first('last_name') }}</strong>
+                            </span>
+                          @endif
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" name="email" aria-describedby="emailHelp" placeholder="Email Address" value="{{ old('email') }}" required>
+
+                            @if ($errors->has('email'))
+                              <div class="invalid-feedback">
+                                  <strong>{{ $errors->first('email') }}</strong>
+                              </div>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" id="password" name="password" placeholder="Password" required>
+
+                            @if ($errors->has('password'))
+                              <div class="invalid-feedback">
+                                  <strong>{{ $errors->first('password') }}</strong>
+                              </div>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" id="password-confirm" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birthday">Date of Birth</label>
+                            <input type="date" class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}" name="birthday" required value="{{ old('birthday') }}" id="birthday">
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-4">
+                                <input type="radio" name="gender" value="1" required><span class="la la-male" style="font-size: 30px"></span> Male    
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <input type="radio" name="gender" value="0"><span class="la la-female" style="font-size: 30px"></span> Female    
+                            </div>
+                            
+                        </div>
+
+                        <button class="buttonRounded btn btn-success btn-lg btn-block" type="submit" onclick="">Create Account</button>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
 
         <div style="position: relative;" id="loading">
             
         </div>
         
 
-        <div class="card" style="width: 27rem; border-radius: 25px !important;">
-            <div class="cardRadius card-body">
-                <h4 class="card-title text-center"><b>JOIN FOR FREE!</b></h4>
-                <br>
-                <form action="{{ route('register') }}" method="post">
-                    @csrf
-
-                    <div class="form-group">
-                      <div class="form-row">
-                        <div class="form-group col-md-6 col-sm-12">
-                            <input type="text" class="form-control {{ $errors->has('first_name') ? ' is-invalid' : '' }}" id="first_name" name="first_name" placeholder="First Name" value="{{ old('first_name') }}" required autofocus>
-                        </div>
-
-                        <div class="form-group col-md-6 col-sm-12">
-                            <input type="text" class="form-control {{ $errors->has('last_name') ? ' is-invalid' : '' }}" id="last_name" name="last_name" placeholder="Last Name" value="{{ old('last_name') }}" required autofocus>
-                        </div>
-                      </div>
-
-                      @if ($errors->has('first_name') || $errors->has('last_name'))
-                        <span class="invalid-feedback">
-                            <strong>{{ $errors->first('first_name') }} {{ $errors->first('last_name') }}</strong>
-                        </span>
-                      @endif
-                    </div>
-
-                    <div class="form-group">
-                        <input type="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" name="email" aria-describedby="emailHelp" placeholder="Email Address" value="{{ old('email') }}" required>
-
-                        @if ($errors->has('email'))
-                          <div class="invalid-feedback">
-                              <strong>{{ $errors->first('email') }}</strong>
-                          </div>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
-                        <input type="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" id="password" name="password" placeholder="Password" required>
-
-                        @if ($errors->has('password'))
-                          <div class="invalid-feedback">
-                              <strong>{{ $errors->first('password') }}</strong>
-                          </div>
-                        @endif
-                    </div>
-
-                    <div class="form-group">
-                        <input type="password" id="password-confirm" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="birthday">Date of Birth</label>
-                        <input type="date" class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}" name="birthday" required value="{{ old('birthday') }}" id="birthday">
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col-md-4">
-                            <input type="radio" name="gender" value="1" required><span class="la la-male" style="font-size: 30px"></span> Male    
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <input type="radio" name="gender" value="0"><span class="la la-female" style="font-size: 30px"></span> Female    
-                        </div>
-                        
-                    </div>
-
-                    <button class="buttonRounded btn btn-success btn-lg btn-block" type="submit" onclick="">Create Account</button>
-                </form>
-                
-            </div>
-        </div>
+        
+    </div>
+    <div class="fixed-bottom py-2" style="background-color: #fff !important;">
+        <small><center>Copyright &copy 2018 <a href="#">JoinVenture</a>, All rights reserved </center></small>
     </div>
 
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
