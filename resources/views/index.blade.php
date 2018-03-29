@@ -183,19 +183,19 @@
     <div class="row mx-3" style="margin-top: 150px;">
         <div class="col col-md-7 col-xl-9" style="margin-top: 50px;">
             <h1 class="text-center" style="color: #5c8e2f"><b>Where you can find your venture partner</b></h1>
-            <div class="row" style="margin-top: 100px; opacity: 0.5;">
+            <div class="row" style="margin-top: 100px; opacity: 0.6;">
                 <div class="col-sm-12 col-md-4">
-                    <img style="max-width: 200px; margin: 0 auto; display: block;" src="{{asset('img/community.png')}}">
+                    <img style="max-width: 150px; margin: 0 auto; display: block;" src="{{asset('img/community.png')}}">
                     <br>
                     <h5><center><b>Conecting people</b></center></h5>
                 </div>
                 <div class="col-sm-12 col-md-4">
-                    <img style="max-width: 200px; margin: 0 auto; display: block;" src="{{asset('img/map.png')}}">
+                    <img style="max-width: 150px; margin: 0 auto; display: block;" src="{{asset('img/map.png')}}">
                     <br>
                     <h5><center><b>Make your own story</b></center></h5>
                 </div>
                 <div class="col-sm-12 col-md-4 ">
-                    <img style="max-width: 200px; margin: 0 auto; display: block;" src="{{asset('img/idea.png')}}">
+                    <img style="max-width: 150px; margin: 0 auto; display: block;" src="{{asset('img/idea.png')}}">
                     <br>
                     <h5><center><b>Get some fresh idea</b></center></h5>
                 </div>
