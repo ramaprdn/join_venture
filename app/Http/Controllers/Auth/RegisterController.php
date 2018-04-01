@@ -11,6 +11,10 @@ use Illuminate\Support\Str;
 use Mail;
 use App\Mail\verifyEmail;
 use Session;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Registered;
+
 
 class RegisterController extends Controller
 {

@@ -163,19 +163,6 @@ JoinVenture - Home
 <script type="text/javascript" async>
 
 
-	function insert_post(){
-		var description = $('.emojionearea-editor').html();
-		var _token = $("input[name=_token]").val();
-		var http = new XMLHttpRequest();
-		var url = "/post";
-		var params = "description=" + description + "&_token=" + _token;
-		http.open("POST", url, true);
-
-		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-		http.send(params);
-	}
-
 	function previewImage(input){
 		if(input){
 			var i = 0;
