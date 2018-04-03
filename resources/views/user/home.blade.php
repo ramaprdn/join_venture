@@ -118,6 +118,7 @@ JoinVenture - Home
 	                    <div class="imagelist" id="imagelist{{ $post->id }}">
 	                    	
 	                    </div>
+	                    <a href="{{ route('like', $post->id) }}">like</a>
 	                </div>
 	                <div class="card-footer">
 	                    <div class="row">

@@ -7,6 +7,7 @@ use App\Post;
 use Auth;
 use App\User;
 use App\Postimage;
+use App\Like;
 
 class PostController extends Controller
 {
@@ -120,5 +121,19 @@ class PostController extends Controller
         }
         return null;
         
+    }
+
+    public function like($post_id){
+        $liked = Like::where('post_id', $post_id)->where('user_id', Auth::user()->id)->first();
+        if (sizeof($liked) > 0) {
+            $like = Like::find($liked->id);
+            $like->status = 0;
+            $like->save();
+        }else{
+            $like = new Like;
+            $like->post_id = $post_id;
+            $like->user_id = Auth::user()->id;
+            $like->save();    
+        }
     }
 }

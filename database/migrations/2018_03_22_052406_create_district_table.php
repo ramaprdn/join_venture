@@ -29,6 +29,6 @@ class CreateDistrictTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('regencies');
+        Schema::dropIfExists('districts');
     }
 }

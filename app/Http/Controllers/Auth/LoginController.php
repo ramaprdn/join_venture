@@ -56,12 +56,21 @@ class LoginController extends Controller
         return 'email_log';
     }
 
+    protected function validateLogin(Request $request)
+    {
+        $this->validate($request, [
+            $this->username() => 'required|string',
+            'password_log' => 'required|string',
+        ]);
+    }
+
      /**
      * Get the needed authorization credentials from the request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
+
     protected function credentials(Request $request)
     {
         // return $request->only($this->username(), 'password');
