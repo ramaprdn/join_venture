@@ -180,7 +180,7 @@
     </nav>
 
 
-    <div class="row mx-3" style="margin-top: 150px;">
+    <div class="row mx-3" style="margin-top: 80px;">
         <div class="col col-md-7 col-xl-9" style="margin-top: 50px;">
             <h1 class="text-center" style="color: #5c8e2f"><b>Where you can find your venture partner</b></h1>
             <div class="row" style="margin-top: 100px; opacity: 0.6;">

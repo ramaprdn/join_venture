@@ -20,6 +20,89 @@ JoinVenture - Home
 	.imagelist > a > img{
 		max-height: 100px;	
 	}
+	/*style tambahan*/
+	.green-text {
+            color: #549886;
+        }
+        .grey-text {
+            color: #959595;
+        }
+        button {
+            color: #FFFFFF;
+            background-color: #549886;
+        }
+        .buttonRounded {
+            border-radius: 25px;
+        }
+
+        .card-rounded {
+            border-radius: 25px;
+        }
+        .card-timeline-title {
+            border-top-left-radius: 0px;
+            border-top-right-radius: 25px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 25px;
+            margin-top: 120px;
+        }
+        .image-home {
+            max-height: 150px;
+            border-top-right-radius: 25px;
+            border-top-left-radius: 25px;
+            object-fit: cover;
+        }
+        .image-profile {
+            max-width: 120px; 
+            margin-top: 90px;
+            margin-left: 15px; 
+            border: 5px solid;
+            border-color: #FFFFFF;
+            object-fit: cover;
+        }
+        .image-timeline {
+            max-height: 300px;
+            border-top-right-radius: 25px;
+            border-top-left-radius: 25px;
+            object-fit: cover;
+            opacity: 0.5;
+        }
+        .image-story {
+            width: 80px;
+            height: 80px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .image-arrow {
+            width: 20px;
+            opacity: 0.6;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .vertical-scroll-wrapper {
+            width: 100%;
+            height: 250px;
+            overflow-y: auto;
+            overflow-x: hidden;         
+        }
+        #horizontal-scroll-wrapper {
+            height:80px;
+            background-color: #FFF;
+            overflow-x: auto;
+            overflow-y: hidden;
+            border-radius: 50px;
+            white-space: nowrap;
+            scroll-behavior: smooth;
+        }
+        #horizontal-scroll-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        @media (max-width: 575px) {
+            .image-arrow {
+                margin-left: -50px;
+            }
+        }
 </style>
 <script type="text/javascript" async>
 	function getPostImage(post_id){
@@ -55,47 +138,99 @@ JoinVenture - Home
 @endsection
 
 @section('section')
-<div class="container-fluid" style="margin-top: 80px;">
+<div class="container-fluid px-md-5 px-sm-1" style="margin-top: 80px;">
     <div class="row">   
-        <div class="col-lg-3 col-sm-12">
-            <div class="card">
+        <div class="col-md-4 col-sm-12">
+            <div class="card card-rounded">
+                <img style="position: relative;" class="image-home" src="{{asset('img/nearby-1.jpg')}}"> 
+                <div style="position: absolute;">
+                    <img class="rounded-circle image-profile" src="{{asset('img/profile.jpg')}}">
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title"><b>Nearby Adventure</b></h5>
-                    <br>
-                    <img src="nearby-1.jpg" alt="..." class="rounded imgThumb">    
-                    <img src="nearby-2.jpg" alt="..." class="rounded imgThumb">
-                    <img src="nearby-1.jpg" alt="..." class="rounded imgThumb">             
-                    <img src="nearby-2.jpg" alt="..." class="rounded imgThumb">
-                    <img src="nearby-1.jpg" alt="..." class="rounded imgThumb">
-                    <img src="plus.png" alt="..." class="rounded imgThumb">
+                    <div class="green-text">
+                        <br>
+                        <br>
+                        <h2><b>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</b></h2>
+                        <p>"Living Like Larry"</p>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-lg" style="border-radius: 50px;"><b>></b></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-rounded my-2">
+                <div class="card-body">
+                    <div class="green-text">
+                        <h2><b>Top Stories</b></h2>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-1 col-sm-1 px-0 pt-4">
+                                <a href="#">
+                                    <img id="leftArrow" src="{{asset('img/left-arrow.png')}}" class="image-arrow">
+                                </a>
+                            </div>
+                            <div class="col-md-10 col-sm-10">
+                                <div id="horizontal-scroll-wrapper">
+                                    <img class="image-story rounded-circle" src="{{asset('img/nearby-1.jpg')}}">
+                                    <img class="image-story rounded-circle" src="{{asset('img/nearby-2.jpg')}}">
+                                    <img class="image-story rounded-circle" src="{{asset('img/nearby-1.jpg')}}">
+                                    <img class="image-story rounded-circle" src="{{asset('img/nearby-2.jpg')}}">
+                                    <img class="image-story rounded-circle" src="{{asset('img/nearby-1.jpg')}}">
+                                    <img class="image-story rounded-circle" src="{{asset('img/nearby-2.jpg')}}">
+                                    <img class="image-story rounded-circle" src="{{asset('img/nearby-1.jpg')}}">
+                                    <img class="image-story rounded-circle" src="{{asset('img/nearby-2.jpg')}}">
+                                    <img class="image-story rounded-circle" src="{{asset('img/nearby-1.jpg')}}">
+                                    <img class="image-story rounded-circle" src="{{asset('img/nearby-2.jpg')}}">
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 px-0 pt-4">
+                                <a href="#">
+                                    <img id="rightArrow" src="{{asset('img/right-arrow.png')}}" class="image-arrow">
+                                </a>
+                            </div>
+                            
+                        </div>
+                        
+                        <br>
+                        <h2><b>Nearby Adventure</b></h2>
+                        <div class="vertical-scroll-wrapper">
+                            <div><a href="#" class="green-text"><h4>Denpasar</h4></a></div>
+                            <hr>
+                            <div><h4>Badung</h4></div>
+                            <hr>
+                            <div><h4>Gianyar</h4></div>
+                            <hr>
+                            <div><h4>Bangli</h4></div>
+                            <hr>
+                            <div><h4>Tabanan</h4></div>
+                            <hr>
+                            <div><h4>Karangasem</h4></div>
+                            <hr>
+                            <div><h4>Jembrana</h4></div>
+                            <hr>
+                            <div><h4>Klungkung</h4></div>
+                            <hr>
+                            <div><h4>Singaraja</h4></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    
-        
-        <div class="col-lg-6 col-sm-12">
-            <div class="card">
+        <div class="col-md-8 col-sm-12">
+            <div class="card card-rounded">
             	<form action="{{ route('post.store') }}" method="POST" enctype="multipart/form-data">
 	        		@csrf
 	        		<div class="card-body">
-	                    <div class="row">
-	                        <div class="col-lg-2">
-	                            <div style="height: 70px; width: 70px; border-radius: 50px; background-color: #000"></div>                                
-	                        </div>
-	                        <div class="form-group col-lg-10">
-	                            <textarea class="form-control bg-light" name="description" id="post" rows="4" placeholder="Where have you been, {{Auth::user()->first_name}}?" required></textarea>
-	                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control bg-light card-rounded" name="description" id="post" rows="6" placeholder="Where have you been, {{Auth::user()->first_name}}?" required></textarea>
+                        </div>
 	                         
-	                    </div>
 	                    <input type="file" name="image_post[]" id="image-input" multiple="" accept="image/*">
 	                    <div id="previewImage"></div>
 	                </div>
-	                <div class="card-footer">
-	                    <div class="col-sm-12">
-	                        <button type="button" class="btn btn-info buttonRounded" onclick="addImage()">Add Photo</button>
-	                        <button type="submit" class="btn btn-success buttonRounded pull-right" >PUSH</button>
-	                    </div>
-	                </div>
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-lg buttonRounded pull-right px-md-5 px-sm-1 mx-2"><b>PUSH</b></button>
+                    </div>
             	</form>               
             </div>
             <br>
@@ -137,21 +272,6 @@ JoinVenture - Home
 	            </div>
             @endforeach()
             
-        </div>
-       
-        <div class="col-lg-3 col-sm-12">                
-            <div class="card">
-                <div class="card-body">
-                    <h5><b>Story</b></h5>
-                    <br>
-                    <img src="nearby-1.jpg" alt="..." class="rounded-circle imgThumb">    
-                    <img src="nearby-2.jpg" alt="..." class="rounded-circle imgThumb">
-                    <img src="nearby-1.jpg" alt="..." class="rounded-circle imgThumb">             
-                    <img src="nearby-2.jpg" alt="..." class="rounded-circle imgThumb">
-                    <img src="nearby-1.jpg" alt="..." class="rounded-circle imgThumb">
-                    <img src="plus.png" alt="..." class="rounded-circle imgThumb">
-                </div>
-            </div>             
         </div>
     </div>
 </div>
@@ -203,6 +323,16 @@ JoinVenture - Home
 		});
 	}
 
-	
+	document.addEventListener('DOMContentLoaded', function () {   
+        var buttonRight = document.getElementById('rightArrow');
+        buttonRight.onclick = function () {
+            document.getElementById('horizontal-scroll-wrapper').scrollLeft += 168;
+        };
+        var buttonLeft = document.getElementById('leftArrow');
+        buttonLeft.onclick = function () {
+            document.getElementById('horizontal-scroll-wrapper').scrollLeft -= 168;
+        };
+    }, false);	
+
 </script>
 @endsection
