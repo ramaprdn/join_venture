@@ -161,7 +161,7 @@
                 <div class="row">
                     <div class="col-sm-5">
                       <input name="email_log" class="form-control small-input {{ $errors->has('email_log') ? ' is-invalid' : '' }}" type="email" placeholder="E-mail" value="{{ old('email_log') }}" required autofocus>
-                      <a href="#" style="font-size: 12px">Forgot Your Password?</a>
+                      <a href="/password/reset" style="font-size: 12px">Forgot Your Password?</a>
                     </div>
                     <div class="col-sm-5">
                       <input name="password_log" class="form-control small-input {{ $errors->has('password_log') ? ' is-invalid' : '' }}" type="password" placeholder="Password" required autofocus>

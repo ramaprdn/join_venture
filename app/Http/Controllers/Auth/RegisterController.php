@@ -14,6 +14,7 @@ use Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
+use App\Http\Controllers\Metaphone;
 
 
 class RegisterController extends Controller
@@ -97,6 +98,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'birthday' => $data['birthday'],
             'gender' => $data['gender'],
+            'name_key' => Metaphone::metaphoneIndo($data['first_name'].$data['last_name']),
             'verifyToken' => Str::random(40),
         ]);
         $thisUser = User::findOrFail($user->id);

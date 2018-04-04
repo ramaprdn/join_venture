@@ -13,12 +13,16 @@
         .buttonRounded {
             border-radius: 25px;
         }
+
+        nav{
+            background-color: #fff !important;
+        }
     </style>
     @yield('css')
 </head>
 <body>
 
-	<nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light" style=" box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);">
+	<nav class="fixed-top navbar navbar-expand-lg navbar-light" style=" box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);">
         <a class="navbar-brand ml-3 mr-5 navFont" href="/"><b style="color: #5c8e2f">JOINVENTURE</b></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -26,7 +30,7 @@
 
         <div class="collapse navbar-collapse ml-3" id="navbarSupportedContent">
             <ul class="navbar-nav col-md-5 mr-auto">
-                <input class="form-control mr-sm-2 buttonRounded" type="search" placeholder="Search for adventure" aria-label="Search">
+                <input class="form-control mr-sm-2 buttonRounded" type="search" placeholder="Search" name="search" aria-label="Search">
             </ul>
 
             <div class="navFont">

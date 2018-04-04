@@ -38,7 +38,6 @@
             height: auto;
         }
         input{
-            border-radius: 25px !important;
             margin-bottom: 8px;
         }
 
@@ -75,7 +74,7 @@
       <div class="card" style="max-width:500px; margin: 0 auto; border-radius: 25px;">
 
         <div class="col-sm-12 title navFont">
-          <h4>login</h4>
+          <h4>Reset password</h4>
         </div>
           
         <div class="col-sm-12" style="margin-bottom: 24px;">
@@ -90,28 +89,37 @@
               </button>
             </div>
             @endif
-          <form action="{{ route('login') }}" method="post">
+          <form action="{{ route('password.request') }}" method="post">
             @csrf
-            <input type="text" class="form-control {{ session()->has('email') ? ' is-invalid' : '' }}" name="email_log" placeholder="Email Address" required autofocus>
 
-            @if (session()->has('email'))
-                <span class="invalid-feedback" style="text-align: center; margin-bottom: 8px;">
-                  <strong>the account you have entered is not match to our records</strong>
+            <input type="hidden" name="token" value="{{ $token }}">
+
+            <input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Email Address" required autofocus>
+
+            @if ($errors->has('email'))
+                <span class="invalid-feedback">
+                    <strong>{{ $errors->first('email') }}</strong>
                 </span>
             @endif
 
-            <input type="password" class="form-control {{ $errors->has('password_log') ? ' is-invalid' : '' }}" name="password_log" placeholder="Password" required autofocus>
+            <input type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="New Password" required>
 
-            <button type="submit" class="btn btn-success btn-block" style="border-radius:25px; margin-top:20px;">login</button>
+            @if ($errors->has('password'))
+                <span class="invalid-feedback">
+                    <strong>{{ $errors->first('password') }}</strong>
+                </span>
+            @endif
 
-            <div class="row col-sm-12" style="margin-top:10px;">
-              <div class="col-md-6">
-                <a href="/password/reset">Forget Password?</a>  
-              </div>
-              <div class="col-md-6">
-                <a href="/" >Sign up for JoinVenture</a>
-              </div>
-            </div>
+            <input type="password" class="form-control{{ $errors->has('password_confirmation') ? '  is-invalid' : '' }}" name="password_confirmation" placeholder="Confirm Password" required>
+
+            @if ($errors->has('password_confirmation'))
+                <span class="invalid-feedback">
+                    <strong>{{ $errors->first('password_confirmation') }}</strong>
+                </span>
+            @endif
+
+            <button type="submit" class="btn btn-success btn-block" style="border-radius:25px; margin-top:20px;">Reset</button>
+
             
           </form>
         </div>
