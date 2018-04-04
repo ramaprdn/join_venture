@@ -257,11 +257,11 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <input type="radio" name="gender" value="1" required><span class="la la-male" style="font-size: 30px"></span> Male    
                             </div>
                             
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <input type="radio" name="gender" value="0"><span class="la la-female" style="font-size: 30px"></span> Female    
                             </div>
                             
