@@ -32,11 +32,11 @@ JoinVenture - Home
         background-color: #549886;
     }
     .buttonRounded {
-        border-radius: 25px;
+        border-radius: 30px;
     }
 
     .card-rounded {
-        border-radius: 25px;
+        border-radius: 15px;
     }
     .card-timeline-title {
         border-top-left-radius: 0px;
@@ -47,8 +47,8 @@ JoinVenture - Home
     }
     .image-home {
         max-height: 110px;
-        border-top-right-radius: 25px;
-        border-top-left-radius: 25px;
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
         object-fit: cover;
     }
     .image-profile {
@@ -61,8 +61,8 @@ JoinVenture - Home
     }
     .image-timeline {
         max-height: 300px;
-        border-top-right-radius: 25px;
-        border-top-left-radius: 25px;
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
         object-fit: cover;
         opacity: 0.5;
     }
@@ -260,7 +260,7 @@ JoinVenture - Home
 	                    </div>
 	                    <a href="{{ route('like', $post->id) }}">like</a>
 	                </div>
-	                <div class="card-footer">
+	                <div class="card-footer card-rounded">
 	                    <div class="row">
                     		<div class="col-sm-10">
                     			<input id="comment{{ $post->id }}" type="text" name="comment" class="form-control" placeholder="comment">
