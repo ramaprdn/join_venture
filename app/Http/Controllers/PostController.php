@@ -137,16 +137,6 @@ class PostController extends Controller
         }
     }
 
-       
-
-    public function testMetaphone(){
-        $meta1 = 'rama';
-        $meta2 = 'pradana';
-
-        
-        return Metaphone::metaphoneIndo($meta2.$meta1); 
-        // return metaphone('rumah');
-    }
 
    
 }

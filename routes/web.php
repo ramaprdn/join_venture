@@ -28,4 +28,4 @@ Route::put('/profile/update', 'UserController@update')->name('update_profile')->
 Route::resource('/post', 'PostController');
 Route::get('/post/image/{post_id}', 'PostController@getImagePost');
 Route::get('/like/{post_id}', 'PostController@like')->name('like');
-Route::get('/test', 'PostController@testMetaphone')->name('like');
+

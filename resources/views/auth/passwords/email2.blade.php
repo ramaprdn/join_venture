@@ -89,11 +89,8 @@
               </button>
             </div>
             @endif
-          <form action="{{ route('password.request') }}" method="post">
+          <form action="{{ route('password.email') }}" method="post">
             @csrf
-
-            <input type="hidden" name="token" value="{{ $token }}">
-
             <input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" placeholder="Email Address" required autofocus>
 
             @if ($errors->has('email'))
@@ -102,23 +99,7 @@
                 </span>
             @endif
 
-            <input type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="New Password" required>
-
-            @if ($errors->has('password'))
-                <span class="invalid-feedback">
-                    <strong>{{ $errors->first('password') }}</strong>
-                </span>
-            @endif
-
-            <input type="password" class="form-control{{ $errors->has('password_confirmation') ? '  is-invalid' : '' }}" name="password_confirmation" placeholder="Confirm Password" required>
-
-            @if ($errors->has('password_confirmation'))
-                <span class="invalid-feedback">
-                    <strong>{{ $errors->first('password_confirmation') }}</strong>
-                </span>
-            @endif
-
-            <button type="submit" class="btn btn-success btn-block" style="border-radius:25px; margin-top:20px;">Reset</button>
+            <button type="submit" class="btn btn-success btn-block" style="border-radius:25px; margin-top:20px;">Send Email</button>
 
             
           </form>
