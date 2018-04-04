@@ -22,87 +22,89 @@ JoinVenture - Home
 	}
 	/*style tambahan*/
 	.green-text {
-            color: #549886;
-        }
-        .grey-text {
-            color: #959595;
-        }
-        button {
-            color: #FFFFFF;
-            background-color: #549886;
-        }
-        .buttonRounded {
-            border-radius: 25px;
-        }
+        color: #549886;
+    }
+    .grey-text {
+        color: #959595;
+    }
+    button {
+        color: #FFFFFF;
+        background-color: #549886;
+    }
+    .buttonRounded {
+        border-radius: 25px;
+    }
 
-        .card-rounded {
-            border-radius: 25px;
-        }
-        .card-timeline-title {
-            border-top-left-radius: 0px;
-            border-top-right-radius: 25px;
-            border-bottom-left-radius: 0px;
-            border-bottom-right-radius: 25px;
-            margin-top: 120px;
-        }
-        .image-home {
-            max-height: 150px;
-            border-top-right-radius: 25px;
-            border-top-left-radius: 25px;
-            object-fit: cover;
-        }
-        .image-profile {
-            max-width: 120px; 
-            margin-top: 90px;
-            margin-left: 15px; 
-            border: 5px solid;
-            border-color: #FFFFFF;
-            object-fit: cover;
-        }
-        .image-timeline {
-            max-height: 300px;
-            border-top-right-radius: 25px;
-            border-top-left-radius: 25px;
-            object-fit: cover;
-            opacity: 0.5;
-        }
-        .image-story {
-            width: 80px;
-            height: 80px;
-            display: inline-block;
-            cursor: pointer;
-        }
+    .card-rounded {
+        border-radius: 25px;
+    }
+    .card-timeline-title {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 25px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 25px;
+        margin-top: 120px;
+    }
+    .image-home {
+        max-height: 110px;
+        border-top-right-radius: 25px;
+        border-top-left-radius: 25px;
+        object-fit: cover;
+    }
+    .image-profile {
+        max-width: 80px; 
+        margin-top: 70px;
+        margin-left: 15px; 
+        border: 2px solid;
+        border-color: #FFFFFF;
+        object-fit: cover;
+    }
+    .image-timeline {
+        max-height: 300px;
+        border-top-right-radius: 25px;
+        border-top-left-radius: 25px;
+        object-fit: cover;
+        opacity: 0.5;
+    }
+    .image-story {
+        width: 60px;
+        height: 60px;
+        display: inline-block;
+        cursor: pointer;
+    }
+    .image-arrow {
+        width: 20px;
+        opacity: 0.6;
+        display: block;
+        margin: 0 auto;
+    }
+    .image-upload > input {
+    	display: none;
+    }
+    .vertical-scroll-wrapper {
+        width: 100%;
+        height: 180px;
+        overflow-y: auto;
+        overflow-x: hidden;         
+    }
+    #horizontal-scroll-wrapper {
+        height:60px;
+        background-color: #FFF;
+        overflow-x: auto;
+        overflow-y: hidden;
+        border-radius: 50px;
+        white-space: nowrap;
+        scroll-behavior: smooth;
+    }
+    #horizontal-scroll-wrapper::-webkit-scrollbar {
+        display: none;
+    }
+
+    @media (max-width: 575px) {
         .image-arrow {
-            width: 20px;
-            opacity: 0.6;
-            display: block;
-            margin: 0 auto;
+            margin-left: -50px;
         }
-
-        .vertical-scroll-wrapper {
-            width: 100%;
-            height: 250px;
-            overflow-y: auto;
-            overflow-x: hidden;         
-        }
-        #horizontal-scroll-wrapper {
-            height:80px;
-            background-color: #FFF;
-            overflow-x: auto;
-            overflow-y: hidden;
-            border-radius: 50px;
-            white-space: nowrap;
-            scroll-behavior: smooth;
-        }
-        #horizontal-scroll-wrapper::-webkit-scrollbar {
-            display: none;
-        }
-
-        @media (max-width: 575px) {
-            .image-arrow {
-                margin-left: -50px;
-            }
-        }
+    }
 </style>
 <script type="text/javascript" async>
 	function getPostImage(post_id){
@@ -138,7 +140,7 @@ JoinVenture - Home
 @endsection
 
 @section('section')
-<div class="container-fluid px-md-5 px-sm-1" style="margin-top: 80px;">
+<div class="container" style="margin-top: 80px;">
     <div class="row">   
         <div class="col-md-4 col-sm-12">
             <div class="card card-rounded">
@@ -149,11 +151,10 @@ JoinVenture - Home
                 <div class="card-body">
                     <div class="green-text">
                         <br>
-                        <br>
-                        <h2><b>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</b></h2>
-                        <p>"Living Like Larry"</p>
+                        <h5><b>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</b></h5>
+                        <small>"Living Like Larry"</small>
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-lg" style="border-radius: 50px;"><b>></b></button>
+                            <button type="button" class="btn" style="border-radius: 50px;"><b>></b></button>
                         </div>
                     </div>
                 </div>
@@ -161,7 +162,7 @@ JoinVenture - Home
             <div class="card card-rounded my-2">
                 <div class="card-body">
                     <div class="green-text">
-                        <h2><b>Top Stories</b></h2>
+                        <h5><b>Top Stories</b></h5>
                         <br>
                         <div class="row">
                             <div class="col-md-1 col-sm-1 px-0 pt-4">
@@ -192,25 +193,25 @@ JoinVenture - Home
                         </div>
                         
                         <br>
-                        <h2><b>Nearby Adventure</b></h2>
+                        <h5><b>Nearby Adventure</b></h5>
                         <div class="vertical-scroll-wrapper">
-                            <div><a href="#" class="green-text"><h4>Denpasar</h4></a></div>
+                            <div><a href="#" class="green-text"><p>Denpasar</p></a></div>
                             <hr>
-                            <div><h4>Badung</h4></div>
+                            <div><p>Badung</p></div>
                             <hr>
-                            <div><h4>Gianyar</h4></div>
+                            <div><p>Gianyar</p></div>
                             <hr>
-                            <div><h4>Bangli</h4></div>
+                            <div><p>Bangli</p></div>
                             <hr>
-                            <div><h4>Tabanan</h4></div>
+                            <div><p>Tabanan</p></div>
                             <hr>
-                            <div><h4>Karangasem</h4></div>
+                            <div><p>Karangasem</p></div>
                             <hr>
-                            <div><h4>Jembrana</h4></div>
+                            <div><p>Jembrana</p></div>
                             <hr>
-                            <div><h4>Klungkung</h4></div>
+                            <div><p>Klungkung</p></div>
                             <hr>
-                            <div><h4>Singaraja</h4></div>
+                            <div><p>Singaraja</p></div>
                         </div>
                     </div>
                 </div>
@@ -224,19 +225,23 @@ JoinVenture - Home
                         <div class="form-group">
                             <textarea class="form-control bg-light card-rounded" name="description" id="post" rows="6" placeholder="Where have you been, {{Auth::user()->first_name}}?" required></textarea>
                         </div>
-	                         
-	                    <input type="file" name="image_post[]" id="image-input" multiple="" accept="image/*">
 	                    <div id="previewImage"></div>
 	                </div>
                     <div class="col-sm-12">
-                        <button type="submit" class="btn btn-lg buttonRounded pull-right px-md-5 px-sm-1 mx-2"><b>PUSH</b></button>
+                    	<div class="image-upload">
+                    		<label for="image-input">
+                    			<img class="mx-2" src="{{asset('img/choose-image.png')}}" style="max-width: 30px; opacity: 0.4;">
+                    		</label>
+                         	<input type="file" name="image_post[]" id="image-input" multiple="" accept="image/*">
+                        	<button type="submit" class="btn buttonRounded pull-right px-md-4 px-sm-1 mx-2">PUSH</button>
+                   		</div>
                     </div>
             	</form>               
             </div>
             <br>
 
             @foreach($user_friend_post as $post)
-            	<div class="card mb-2">
+            	<div class="card mb-2 card-rounded">
 	                <div class="card-body">
 	                    <h5 class="card-title">{{ $post->first_name." ".$post->last_name}}</h5>
 	                    @php
@@ -261,7 +266,7 @@ JoinVenture - Home
                     			<input id="comment{{ $post->id }}" type="text" name="comment" class="form-control" placeholder="comment">
                     		</div>
                     		<div class="col-sm-2">
-                    			<button type="button" class="btn btn-success" onclick="sendComment({{ $post->id.",".Auth::user()->id }})">Send</button>
+                    			<button type="button" class="btn buttonRounded" onclick="sendComment({{ $post->id.",".Auth::user()->id }})">Send</button>
                     		</div>
 	                    </div>
 
