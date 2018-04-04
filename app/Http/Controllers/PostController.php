@@ -140,11 +140,12 @@ class PostController extends Controller
        
 
     public function testMetaphone(){
-        $meta1 = 'tj';
-        $meta2 = 'c';
+        $meta1 = 'rama';
+        $meta2 = 'pradana';
+
         
-        // return metaphone($meta1) . "|" . metaphone($meta2); 
-        return Metaphone::metaphoneIndo('rama');
+        return Metaphone::metaphoneIndo($meta2.$meta1); 
+        // return metaphone('rumah');
     }
 
    

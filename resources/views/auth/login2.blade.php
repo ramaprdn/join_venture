@@ -104,9 +104,13 @@
 
             <button type="submit" class="btn btn-success btn-block" style="border-radius:25px; margin-top:20px;">login</button>
 
-            <div class="col-sm-12" style="margin-top:10px;">
-              <a href="/password/reset" class="pull-left">Forget Password</a>
-              <a href="/" class="pull-right">Sign up for JoinVenture</a>
+            <div class="row col-sm-12" style="margin-top:10px;">
+              <div class="col-md-6">
+                <a href="/password/reset">Forget Password?</a>  
+              </div>
+              <div class="col-md-6">
+                <a href="/" >Sign up for JoinVenture</a>
+              </div>
             </div>
             
           </form>
