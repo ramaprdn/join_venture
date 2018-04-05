@@ -118,8 +118,11 @@ JoinVenture - Home
     }
 
     @media (max-width: 575px) {
-        .image-arrow {
-            margin-left: -50px;
+        #leftArrow {
+            display: none;
+        }
+        #rightArrow {
+            display: none;
         }
     }
 </style>
@@ -182,8 +185,8 @@ JoinVenture - Home
                         <h5><b>Top Stories</b></h5>
                         <br>
                         <div class="row">
-                            <div class="col-md-1 col-sm-1 px-0 pt-4">
-                                <img id="leftArrow" src="{{asset('img/left-arrow.png')}}" class="image-arrow">
+                            <div id="leftArrow" class="col-md-1 col-sm-1 px-0 pt-4">
+                                <img src="{{asset('img/left-arrow.png')}}" class="image-arrow">
                             </div>
                             <div class="col-md-10 col-sm-10">
                                 <div id="horizontal-scroll-wrapper">
@@ -199,8 +202,8 @@ JoinVenture - Home
                                     <img class="image-story rounded-circle" src="{{asset('img/nearby-2.jpg')}}">
                                 </div>
                             </div>
-                            <div class="col-md-1 col-sm-1 px-0 pt-4">
-                                <img id="rightArrow" src="{{asset('img/right-arrow.png')}}" class="image-arrow">
+                            <div id="rightArrow" class="col-md-1 col-sm-1 px-0 pt-4">
+                                <img src="{{asset('img/right-arrow.png')}}" class="image-arrow">
                             </div>
                             
                         </div>
@@ -344,11 +347,11 @@ JoinVenture - Home
 	document.addEventListener('DOMContentLoaded', function () {   
         var buttonRight = document.getElementById('rightArrow');
         buttonRight.onclick = function () {
-            document.getElementById('horizontal-scroll-wrapper').scrollLeft += 128;
+            document.getElementById('horizontal-scroll-wrapper').scrollLeft += 64;
         };
         var buttonLeft = document.getElementById('leftArrow');
         buttonLeft.onclick = function () {
-            document.getElementById('horizontal-scroll-wrapper').scrollLeft -= 128;
+            document.getElementById('horizontal-scroll-wrapper').scrollLeft -= 64;
         };
     }, false);	
 
