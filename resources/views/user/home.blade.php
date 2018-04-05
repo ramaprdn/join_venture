@@ -31,6 +31,10 @@ JoinVenture - Home
         color: #FFFFFF;
         background-color: #549886;
     }
+    button:hover {
+        opacity: 0.6 !important;
+        transition: 0.5s;
+    }
     .buttonRounded {
         border-radius: 30px;
     }
@@ -72,14 +76,27 @@ JoinVenture - Home
         display: inline-block;
         cursor: pointer;
     }
+    .image-story:hover {
+        opacity: 0.6;
+        transition: 0.5s;
+    }
     .image-arrow {
         width: 20px;
         opacity: 0.6;
         display: block;
         margin: 0 auto;
+        cursor: pointer;
+    }
+    .image-arrow:hover {
+        opacity: 0.2;
+        transition: 0.4s;
     }
     .image-upload > input {
     	display: none;
+    }
+    .image-upload > label:hover{
+        opacity: 0.5;
+        transition: 0.5s;
     }
     .vertical-scroll-wrapper {
         width: 100%;
@@ -166,9 +183,7 @@ JoinVenture - Home
                         <br>
                         <div class="row">
                             <div class="col-md-1 col-sm-1 px-0 pt-4">
-                                <a href="#">
-                                    <img id="leftArrow" src="{{asset('img/left-arrow.png')}}" class="image-arrow">
-                                </a>
+                                <img id="leftArrow" src="{{asset('img/left-arrow.png')}}" class="image-arrow">
                             </div>
                             <div class="col-md-10 col-sm-10">
                                 <div id="horizontal-scroll-wrapper">
@@ -185,9 +200,7 @@ JoinVenture - Home
                                 </div>
                             </div>
                             <div class="col-md-1 col-sm-1 px-0 pt-4">
-                                <a href="#">
-                                    <img id="rightArrow" src="{{asset('img/right-arrow.png')}}" class="image-arrow">
-                                </a>
+                                <img id="rightArrow" src="{{asset('img/right-arrow.png')}}" class="image-arrow">
                             </div>
                             
                         </div>
@@ -230,7 +243,7 @@ JoinVenture - Home
                     <div class="col-sm-12">
                     	<div class="image-upload">
                     		<label for="image-input">
-                    			<img class="mx-2" src="{{asset('img/choose-image.png')}}" style="max-width: 30px; opacity: 0.4;">
+                    			<img class="mx-2" src="{{asset('img/choose-image.png')}}" style="max-width: 30px; opacity: 0.6; cursor: pointer;">
                     		</label>
                          	<input type="file" name="image_post[]" id="image-input" multiple="" accept="image/*">
                         	<button type="submit" class="btn buttonRounded pull-right px-md-4 px-sm-1 mx-2">PUSH</button>
@@ -331,11 +344,11 @@ JoinVenture - Home
 	document.addEventListener('DOMContentLoaded', function () {   
         var buttonRight = document.getElementById('rightArrow');
         buttonRight.onclick = function () {
-            document.getElementById('horizontal-scroll-wrapper').scrollLeft += 168;
+            document.getElementById('horizontal-scroll-wrapper').scrollLeft += 128;
         };
         var buttonLeft = document.getElementById('leftArrow');
         buttonLeft.onclick = function () {
-            document.getElementById('horizontal-scroll-wrapper').scrollLeft -= 168;
+            document.getElementById('horizontal-scroll-wrapper').scrollLeft -= 128;
         };
     }, false);	
 
