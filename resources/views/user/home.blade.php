@@ -280,8 +280,7 @@ JoinVenture - Home
         </div>
     </div>
 </div>
-	
-</script>
+
 @endsection
 
 @section('script')

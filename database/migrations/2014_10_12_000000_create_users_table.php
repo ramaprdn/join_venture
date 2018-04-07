@@ -26,7 +26,9 @@ class CreateUsersTable extends Migration
             $table->string('verifyToken')->nullable();
             $table->boolean('status')->default(0);
             $table->rememberToken();
-            $table->string('name_key');
+            $table->string('first_name_key');
+            $table->string('last_name_key');
+            $table->string('full_name_key');
             $table->timestamps();
         });
     }

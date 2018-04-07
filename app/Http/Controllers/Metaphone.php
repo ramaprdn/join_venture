@@ -185,7 +185,11 @@ class Metaphone extends Controller
                     }
 
                     if ($string[$i] == 'O' && $i < $string_len -1) {
-                        if (strpos($vokal, $string[$i+1]) !== false && $string[$i+2] != 'E') {
+                        if($string[$i+1] == 'E'){
+                            $string[$i] = "\0";
+                            $string[$i+1] = "\0";
+                        }
+                        else if (strpos($vokal, $string[$i+1]) !== false && $string[$i+2] != 'E') {
                             $string[$i] = 'W';
                         }
                     }

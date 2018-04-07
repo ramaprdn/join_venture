@@ -31,7 +31,9 @@
 
             <div class="collapse navbar-collapse ml-3" id="navbarSupportedContent">
                 <ul class="navbar-nav col-md-5 mr-auto">
-                    <input class="form-control mr-sm-2 buttonRounded" type="search" placeholder="Search" name="search" aria-label="Search">
+                    <form action="/search" method="get" class="col-sm-12" style="margin-bottom: 0px !important;">
+                        <input class="form-control mr-sm-2 buttonRounded" type="search" placeholder="Search" name="q" aria-label="Search">
+                    </form>
                 </ul>
 
                 <div class="navFont">
