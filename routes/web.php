@@ -28,5 +28,7 @@ Route::put('/profile/update', 'UserController@update')->name('update_profile')->
 Route::resource('/post', 'PostController');
 Route::get('/post/image/{post_id}', 'PostController@getImagePost');
 Route::get('/like/{post_id}', 'PostController@like')->name('like');
-Route::get('/search', 'SearchController@searchFriend');
+Route::get('/search', 'SearchController@search');
+Route::get('/search/unfollowedFriend', 'SearchController@searchFriendNotFollowed');
+Route::get('/search/followedFriend', 'SearchController@searchFriendFollowed');
 

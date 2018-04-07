@@ -98,7 +98,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'birthday' => $data['birthday'],
             'gender' => $data['gender'],
-            'name_key' => Metaphone::metaphoneIndo($data['first_name'].$data['last_name']),
+            'first_name_key' => Metaphone::metaphoneIndo($data['first_name']), 
+            'last_name_key' => Metaphone::metaphoneIndo($data['last_name']), 
+            'full_name_key' => Metaphone::metaphoneIndo($data['first_name'].$data['last_name']),
             'verifyToken' => Str::random(40),
         ]);
         $thisUser = User::findOrFail($user->id);
