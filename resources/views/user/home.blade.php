@@ -31,12 +31,16 @@ JoinVenture - Home
         color: #FFFFFF;
         background-color: #549886;
     }
+    button:hover {
+        opacity: 0.6 !important;
+        transition: 0.5s;
+    }
     .buttonRounded {
-        border-radius: 25px;
+        border-radius: 30px;
     }
 
     .card-rounded {
-        border-radius: 25px;
+        border-radius: 15px;
     }
     .card-timeline-title {
         border-top-left-radius: 0px;
@@ -47,8 +51,8 @@ JoinVenture - Home
     }
     .image-home {
         max-height: 110px;
-        border-top-right-radius: 25px;
-        border-top-left-radius: 25px;
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
         object-fit: cover;
     }
     .image-profile {
@@ -61,8 +65,8 @@ JoinVenture - Home
     }
     .image-timeline {
         max-height: 300px;
-        border-top-right-radius: 25px;
-        border-top-left-radius: 25px;
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
         object-fit: cover;
         opacity: 0.5;
     }
@@ -72,14 +76,27 @@ JoinVenture - Home
         display: inline-block;
         cursor: pointer;
     }
+    .image-story:hover {
+        opacity: 0.6;
+        transition: 0.5s;
+    }
     .image-arrow {
         width: 20px;
         opacity: 0.6;
         display: block;
         margin: 0 auto;
+        cursor: pointer;
+    }
+    .image-arrow:hover {
+        opacity: 0.2;
+        transition: 0.4s;
     }
     .image-upload > input {
     	display: none;
+    }
+    .image-upload > label:hover{
+        opacity: 0.5;
+        transition: 0.5s;
     }
     .vertical-scroll-wrapper {
         width: 100%;
@@ -101,8 +118,11 @@ JoinVenture - Home
     }
 
     @media (max-width: 575px) {
-        .image-arrow {
-            margin-left: -50px;
+        #leftArrow {
+            display: none;
+        }
+        #rightArrow {
+            display: none;
         }
     }
 </style>
@@ -165,10 +185,8 @@ JoinVenture - Home
                         <h5><b>Top Stories</b></h5>
                         <br>
                         <div class="row">
-                            <div class="col-md-1 col-sm-1 px-0 pt-4">
-                                <a href="#">
-                                    <img id="leftArrow" src="{{asset('img/left-arrow.png')}}" class="image-arrow">
-                                </a>
+                            <div id="leftArrow" class="col-md-1 col-sm-1 px-0 pt-4">
+                                <img src="{{asset('img/left-arrow.png')}}" class="image-arrow">
                             </div>
                             <div class="col-md-10 col-sm-10">
                                 <div id="horizontal-scroll-wrapper">
@@ -184,10 +202,8 @@ JoinVenture - Home
                                     <img class="image-story rounded-circle" src="{{asset('img/nearby-2.jpg')}}">
                                 </div>
                             </div>
-                            <div class="col-md-1 col-sm-1 px-0 pt-4">
-                                <a href="#">
-                                    <img id="rightArrow" src="{{asset('img/right-arrow.png')}}" class="image-arrow">
-                                </a>
+                            <div id="rightArrow" class="col-md-1 col-sm-1 px-0 pt-4">
+                                <img src="{{asset('img/right-arrow.png')}}" class="image-arrow">
                             </div>
                             
                         </div>
@@ -230,7 +246,7 @@ JoinVenture - Home
                     <div class="col-sm-12">
                     	<div class="image-upload">
                     		<label for="image-input">
-                    			<img class="mx-2" src="{{asset('img/choose-image.png')}}" style="max-width: 30px; opacity: 0.4;">
+                    			<img class="mx-2" src="{{asset('img/choose-image.png')}}" style="max-width: 30px; opacity: 0.6; cursor: pointer;">
                     		</label>
                          	<input type="file" name="image_post[]" id="image-input" multiple="" accept="image/*">
                         	<button type="submit" class="btn buttonRounded pull-right px-md-4 px-sm-1 mx-2">PUSH</button>
@@ -260,7 +276,7 @@ JoinVenture - Home
 	                    </div>
 	                    <a href="{{ route('like', $post->id) }}">like</a>
 	                </div>
-	                <div class="card-footer">
+	                <div class="card-footer card-rounded">
 	                    <div class="row">
                     		<div class="col-sm-10">
                     			<input id="comment{{ $post->id }}" type="text" name="comment" class="form-control" placeholder="comment">
@@ -330,11 +346,11 @@ JoinVenture - Home
 	document.addEventListener('DOMContentLoaded', function () {   
         var buttonRight = document.getElementById('rightArrow');
         buttonRight.onclick = function () {
-            document.getElementById('horizontal-scroll-wrapper').scrollLeft += 168;
+            document.getElementById('horizontal-scroll-wrapper').scrollLeft += 64;
         };
         var buttonLeft = document.getElementById('leftArrow');
         buttonLeft.onclick = function () {
-            document.getElementById('horizontal-scroll-wrapper').scrollLeft -= 168;
+            document.getElementById('horizontal-scroll-wrapper').scrollLeft -= 64;
         };
     }, false);	
 

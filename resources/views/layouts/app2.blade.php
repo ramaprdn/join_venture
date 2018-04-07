@@ -11,7 +11,7 @@
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
     <style>
         .buttonRounded {
-            border-radius: 25px;
+            border-radius: 30px;
         }
 
         nav{
