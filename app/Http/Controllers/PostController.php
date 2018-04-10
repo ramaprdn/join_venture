@@ -126,14 +126,18 @@ class PostController extends Controller
     public function like($post_id){
         $liked = Like::where('post_id', $post_id)->where('user_id', Auth::user()->id)->first();
         if (sizeof($liked) > 0) {
-            $like = Like::find($liked->id);
-            $like->status = 0;
-            $like->save();
+            if ($liked->status == 1) {
+                $liked->status = 0;
+                $liked->save();
+            }else if($liked->status == 0){
+                $liked->status = 1;
+                $liked->save();
+            }
         }else{
             $like = new Like;
             $like->post_id = $post_id;
             $like->user_id = Auth::user()->id;
-            $like->save();    
+            $like->save();
         }
     }
 

@@ -4,8 +4,13 @@
 JoinVenture - Home
 @endsection
 
+@section('story')
+active
+@endsection
+
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.fancybox.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
 
 <style type="text/css">
 	.img-preview{
@@ -13,9 +18,9 @@ JoinVenture - Home
 		margin-right: 2px; 
 	}
 
-	.image_emoticon > img{
-		max-height: 18px;
-	}
+    .fa{
+        font-size:20px;
+    }
 
 	.imagelist > a > img{
 		max-height: 100px;	
@@ -274,7 +279,7 @@ JoinVenture - Home
 	                    <div class="imagelist" id="imagelist{{ $post->id }}">
 	                    	
 	                    </div>
-	                    <a href="{{ route('like', $post->id) }}">like</a>
+	                    <span class="fa {{ $post->status_like == 1 ? ' fa-thumbs-up' : 'fa-thumbs-o-up'}}" id="icon{{ $post->id }}" onclick="like({{ $post->id }})"></span>
 	                </div>
 	                <div class="card-footer card-rounded">
 	                    <div class="row">
@@ -342,6 +347,22 @@ JoinVenture - Home
 			}
 		});
 	}
+
+    function like(post_id){
+        var url = 'like/' + post_id;
+        $.ajax({
+            type:'get',
+            url:url,
+            success: function(){
+                var class_name = $('#icon' + post_id).attr('class');
+                if(class_name == 'fa fa-thumbs-o-up'){
+                    $('#icon' + post_id).attr('class', 'fa fa-thumbs-up');
+                }else{
+                    $('#icon' + post_id).attr('class', 'fa fa-thumbs-o-up');
+                }
+            }
+        })
+    }
 
 	document.addEventListener('DOMContentLoaded', function () {   
         var buttonRight = document.getElementById('rightArrow');
