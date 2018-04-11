@@ -8,6 +8,7 @@ use Auth;
 use App\User;
 use App\Postimage;
 use App\Like;
+use DB;
 
 class PostController extends Controller
 {
@@ -141,6 +142,27 @@ class PostController extends Controller
         }
     }
 
+
+    public function whoLikeThisPost($post_id){
+        $like = [];
+
+        $like_count = DB::table('likes')
+            ->where('post_id', $post_id)
+            ->where('user_id','<>' , Auth::user()->id)
+            ->count();
+
+        $user_like = DB::table('likes')
+            ->where('post_id', $post_id)
+            ->where('user_id', Auth::user()->id)
+            ->count();
+
+        $like = [
+            'like_count' => $like_count,
+            'user_like' => $user_like
+        ];
+
+        return $like;
+    }
 
    
 }

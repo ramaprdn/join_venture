@@ -32,4 +32,5 @@ Route::get('/like/{post_id}', 'PostController@like')->name('like');
 Route::get('/search', 'SearchController@search');
 Route::get('/search/unfollowedFriend', 'SearchController@searchFriendNotFollowed');
 Route::get('/search/followedFriend', 'SearchController@searchFriendFollowed');
+Route::get('/post/like/{post_id}/count', 'PostController@whoLikeThisPost');
 

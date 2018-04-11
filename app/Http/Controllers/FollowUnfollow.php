@@ -15,7 +15,8 @@ class FollowUnfollow extends Controller
         $isFriend = Friend::where('friend_user_id', $friend_id)
                     ->where('user_id', $user_login)
                     ->first();
-        if (sizeof($isFriend) > 0) {
+
+        if ($isFriend) {
             $friend = Friend::find($isFriend->id);
             $friend->status_following = 1;
             $friend->save();
@@ -35,7 +36,7 @@ class FollowUnfollow extends Controller
                         ->where('status_following', 1)
                         ->first();
         
-        if ( sizeof($friendship_id) > 0 ) {
+        if ( $friendship_id ) {
             $friend = Friend::find($friendship_id->id);
             $friend->status_following = 0;
             $friend->save();
