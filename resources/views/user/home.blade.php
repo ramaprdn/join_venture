@@ -25,28 +25,9 @@ active
 	.imagelist > a > img{
 		max-height: 100px;	
 	}
-	/*style tambahan*/
-	.green-text {
-        color: #549886;
-    }
-    .grey-text {
-        color: #959595;
-    }
-    button {
-        color: #FFFFFF;
-        background-color: #549886;
-    }
-    button:hover {
-        opacity: 0.6 !important;
-        transition: 0.5s;
-    }
-    .buttonRounded {
-        border-radius: 30px;
-    }
 
-    .card-rounded {
-        border-radius: 15px;
-    }
+	/*style tambahan*/
+    
     .card-timeline-title {
         border-top-left-radius: 0px;
         border-top-right-radius: 25px;
