@@ -169,14 +169,14 @@ active
             url:url,
             success: function(data){
                 if(data['user_like'] == 0 && data['like_count'] > 0){
-                    $('#like'+post_id).html( data['like_count'] + 'orang menyukai ini');
+                    $('#like'+post_id).html( data['like_count'] + ' orang menyukai ini');
                 }else if(data['user_like'] > 0 && data['like_count'] > 0){
-                    $('#like'+post_id).html( 'anda dan ' + data['like_count'] + 'orang lain menyukai ini');
+                    $('#like'+post_id).html( 'anda dan ' + data['like_count'] + ' orang lain menyukai ini');
                 }
                 else if(data['user_like'] == 1){
                     $('#like'+post_id).html( 'anda menyukai ini');
                 }else if(data['like_count'] > 0){
-                    $('#like'+post_id).html( 'anda menyukai ini');
+                    $('#like'+post_id).html( data['like_count'] + ' orang menyukai ini');
                 }
             },
             error: function(){

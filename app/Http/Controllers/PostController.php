@@ -154,6 +154,7 @@ class PostController extends Controller
         $user_like = DB::table('likes')
             ->where('post_id', $post_id)
             ->where('user_id', Auth::user()->id)
+            ->where('status', 1)
             ->count();
 
         $like = [
