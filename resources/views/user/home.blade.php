@@ -11,8 +11,13 @@ active
 @section('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.fancybox.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/line-awesome.min.css') }}">
 
 <style type="text/css">
+    .bg-light{
+        background-color: #f1ecec!important;
+    }
+
 	.img-preview{
 		max-height: 100px;
 		margin-right: 2px; 
@@ -111,6 +116,27 @@ active
             display: none;
         }
     }
+
+    .action-icon > span{
+        margin-left: 5px;
+        margin-bottom: 0px;
+    }
+
+    .card-body{
+        padding-bottom: 5px !important;
+    }
+
+    .color-title{
+        color: #449474;
+    }
+
+    .color-text{
+        color: #7A7B7B;
+    }
+
+    .color-text-o{
+        color: #959595;   
+    }
 </style>
 <script type="text/javascript" async>
 	function getPostImage(post_id){
@@ -123,7 +149,7 @@ active
 				$('#' + div_class).html(data);
 			},
 			error: function(){
-				alert('gagal');
+				// alert('gagal');
 			}
 		})
 	}
@@ -138,7 +164,7 @@ active
 				$('#comments'+post_id).html(data);
 			},
 			error: function(){
-				alert("error collecting comment");
+				// alert("error collecting comment");
 			}
 		});
 	}
@@ -150,18 +176,21 @@ active
             url:url,
             success: function(data){
                 if(data['user_like'] == 0 && data['like_count'] > 0){
-                    $('#like'+post_id).html( data['like_count'] + ' orang menyukai ini');
+                    $('#like'+post_id).html(data['like_count'] + ' orang menyukai ini');
                 }else if(data['user_like'] > 0 && data['like_count'] > 0){
-                    $('#like'+post_id).html( 'anda dan ' + data['like_count'] + ' orang lain menyukai ini');
+                    $('#like'+post_id).html('anda dan ' + data['like_count'] + ' orang lain menyukai ini');
                 }
                 else if(data['user_like'] == 1){
-                    $('#like'+post_id).html( 'anda menyukai ini');
+                    $('#like'+post_id).html('anda menyukai ini');
                 }else if(data['like_count'] > 0){
-                    $('#like'+post_id).html( data['like_count'] + ' orang menyukai ini');
+                    $('#like'+post_id).html(data['like_count'] + ' orang menyukai ini');
+                }else{
+                    $('#like'+post_id).html('');
                 }
+                getLike(post_id);
             },
             error: function(){
-                alert('error');
+                // alert('error like');
             }
         })
     }
@@ -181,7 +210,7 @@ active
                     <div class="green-text">
                         <br>
                         <h5><b>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</b></h5>
-                        <small>"Living Like Larry"</small>
+                        <small class="color-text">"Living Like Larry"</small>
                         <div class="d-flex justify-content-end">
                             <button type="button" class="btn" style="border-radius: 50px;"><b>></b></button>
                         </div>
@@ -248,7 +277,7 @@ active
 	        		@csrf
 	        		<div class="card-body">
                         <div class="form-group">
-                            <textarea class="form-control bg-light card-rounded" name="description" id="post" rows="6" placeholder="Where have you been, {{Auth::user()->first_name}}?" required></textarea>
+                            <textarea class="form-control bg-light card-rounded" name="description" id="post" rows="3" placeholder="Where have you been, {{Auth::user()->first_name}}?" required></textarea>
                         </div>
 	                    <div id="previewImage"></div>
 	                </div>
@@ -268,35 +297,45 @@ active
             @foreach($user_friend_post as $post)
             	<div class="card mb-2 card-rounded">
 	                <div class="card-body">
-	                    <h5 class="card-title">{{ $post->first_name." ".$post->last_name}}</h5>
-	                    @php
-	                    	$time = new App\Http\Controllers\TimeForHumans;	
-	                    @endphp
-	                    {{ $time->time_elapsed_string($post->created_at) }}
-	                    <div class="image_emoticon">
-	                    	{!! $post->description !!}	
-	                    </div>
-	                    <script type="text/javascript">
-	                    	getPostImage({{ $post->id }});
-	                    	loadComment({{ $post->id }});
-	                    </script>
-	                    <div class="imagelist" id="imagelist{{ $post->id }}">
-	                    	
-	                    </div>
-	                    <span class="fa {{ $post->status_like == 1 ? ' fa-thumbs-up' : 'fa-thumbs-o-up'}}" id="icon{{ $post->id }}" onclick="like({{ $post->id }})"></span>
-                        <div id="like{{ $post->id }}">
-                            <script type="text/javascript">
-                                getLike({{ $post->id }})
-                            </script>    
+                        {{-- post --}}
+                        <h5 class="green-text" style="font-weight: bold; margin-bottom: 0px;">{{ $post->first_name." ".$post->last_name}}</h5>
+                        @php
+                            $time = new App\Http\Controllers\TimeForHumans; 
+                        @endphp
+                        <p style="margin-top: 0; font-size: 11px;" class="color-text-o">{{ $time->time_elapsed_string($post->created_at) }}<p>
+                        <div style="font-size: 14px;" class="color-text">
+                            {!! $post->description !!}  
                         </div>
+                        <script type="text/javascript">
+                            getPostImage({{ $post->id }});
+                            // loadComment({{ $post->id }});
+
+                        </script>
+                        <div class="imagelist" id="imagelist{{ $post->id }}">
+                            {{-- ajax --}}
+                        </div>
+
+                        {{-- comment and like icon --}}
+                        <div style="margin-top: 30px;" class="action-icon">
+                            <span class="color-text fa fa-comment-o" id="comment-icon{{ $post->id }}" onclick="toggle_comment({{ $post->id }})"></span>
+                            <span class="color-text fa {{ $post->status_like == 1 ? ' fa-thumbs-up' : 'fa-thumbs-o-up'}}" id="like-icon{{ $post->id }}" onclick="like({{ $post->id }})"></span>
+                            <span id="like{{ $post->id }}" class="color-text"></span>
+                            <script type="text/javascript">
+                                // window.setInterval(function(){
+                                //     getLike({{ $post->id }});
+                                //     loadComment({{ $post->id }})
+                                // }, 5000);
+                            </script>    
+                        </div>  
+                        {{-- post --}}
 	                </div>
-	                <div class="card-footer card-rounded">
-	                    <div class="row">
-                    		<div class="col-sm-10">
-                    			<input id="comment{{ $post->id }}" type="text" name="comment" class="form-control" placeholder="comment">
+	                <div class="card-footer bg-light">
+	                    <div class="row" id="toggle-comment{{ $post->id }}">
+                    		<div class="col-sm-11">
+                    			<input id="comment{{ $post->id }}" type="text" name="comment" class="form-control" placeholder="comment" style="border-style: none;">
                     		</div>
-                    		<div class="col-sm-2">
-                    			<button type="button" class="btn buttonRounded" onclick="sendComment({{ $post->id.",".Auth::user()->id }})">Send</button>
+                    		<div class="col-sm-1">
+                                <span class="la la-paper-plane color-text pull-right" style="font-size: 35px; cursor: pointer;" onclick="sendComment({{ $post->id.",".Auth::user()->id }})"></span>
                     		</div>
 	                    </div>
 
@@ -317,6 +356,15 @@ active
 <script type="text/javascript" src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
 <script type="text/javascript" async>
 
+    function toggle_comment(post_id){
+        var class_name = $('#toggle-comment' + post_id).attr('style');
+        if(class_name == 'display: none;'){
+            $('#toggle-comment'+post_id).attr('style', '');    
+        }else{
+            $('#toggle-comment'+post_id).attr('style', 'display: none;');
+        }
+        
+    }
 
 	function previewImage(input){
 		if(input){
@@ -352,7 +400,7 @@ active
 				loadComment(post_id);
 			},
 			error: function(){
-				alert('error saving comment');
+				// alert('error saving comment');
 			}
 		});
 	}
@@ -363,11 +411,11 @@ active
             type:'get',
             url:url,
             success: function(){
-                var class_name = $('#icon' + post_id).attr('class');
-                if(class_name == 'fa fa-thumbs-o-up'){
-                    $('#icon' + post_id).attr('class', 'fa fa-thumbs-up');
+                var class_name = $('#like-icon' + post_id).attr('class');
+                if(class_name == 'color-text fa fa-thumbs-o-up'){
+                    $('#like-icon' + post_id).attr('class', 'color-text fa fa-thumbs-up');
                 }else{
-                    $('#icon' + post_id).attr('class', 'fa fa-thumbs-o-up');
+                    $('#like-icon' + post_id).attr('class', 'color-text fa fa-thumbs-o-up');
                 }
             }
         })

@@ -1,5 +1,9 @@
 @extends('layouts.app2')
 
+@section('title')
+Buat Petualangan
+@endsection
+
 @section('adventure')
 active
 @endsection
