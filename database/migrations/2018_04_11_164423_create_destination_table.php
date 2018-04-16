@@ -18,6 +18,7 @@ class CreateDestinationTable extends Migration
             $table->integer('adventure_id')->unsigned();
             $table->foreign('adventure_id')->references('id')->on('adventures');
             $table->string('destinations');
+            $table->string('full_location');
             $table->double('lat');
             $table->double('long');
             $table->timestamps();

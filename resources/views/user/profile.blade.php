@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app2')
 
 @section('css')
 <style type="text/css">
@@ -54,8 +54,8 @@
 </style>
 @endsection
 
-@section('content')
-	<div class="container">
+@section('section')
+	<div class="container" style="margin-top: 80px;">
 		<div class="card-group row margin-small">
 			<div class="card col-md-3 px-0 card-photo-set">
 				<img style="position: relative;" class="image-home" src="{{asset('img/nearby-1.jpg')}}"> 

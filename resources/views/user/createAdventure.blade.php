@@ -104,7 +104,7 @@ active
 @endsection
 
 @section('section')
-<form method="get" action="">
+<form method="post" action="{{ route('adventure.store') }}" enctype="multipart/form-data">
 	@csrf
 	<div class="container" style="margin-top: 80px;">
 		<div class="card" style="background-color: #fff">
@@ -116,7 +116,6 @@ active
 					</div>	
 					<div class="col-sm-5">
 						<div class="pull-right">
-							<button class="btn btn-outline-success" type="button">Draft</button>
 							<button class="btn btn-success" type="submit">Post</button>	
 						</div>
 					</div>	
@@ -126,16 +125,26 @@ active
 			<div class="card-body">
 				<div class="row">
 					<div class="col-md-4">
+						<center>Preview</center> 
+						<br>
 						<div class="card card-rounded">
-			                <img style="position: relative;" class="image-home" src="{{asset('img/nearby-1.jpg')}}"> 
+			                <img style="position: relative;" class="image-home" src="{{asset('img/nearby-1.jpg')}}" id="background-image"> 
 			                <div style="position: absolute;">
 			                    <img class="rounded-circle image-profile" src="{{asset('img/profile.jpg')}}">
 			                </div>
 			                <div class="card-body">
 			                    <div class="green-text">
 			                        <br>
-			                        <h5><b>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</b></h5>
-			                        <small>"Living Like Larry"</small>
+			                        <br>
+			                        <h5><b><center id="adventure_name">Judul Petualangan</center></b></h5>
+			                        <center>Destinasi:</center>
+			                    </div>
+			                    <div class="row">
+			                    	<div class="" style="margin: 0 auto;" id="destination-preview">
+				                    </div>
+			                    </div>
+			                    <div class="mt-5">
+			                    	<a href="" class="pull-right">more info</a>
 			                    </div>
 			                </div>
 			            </div>
@@ -149,12 +158,6 @@ active
 
 			            		</div>
 			            	</div>
-			            	{{-- <ul class="list-group">
-							  <li class="list-group-item d-flex justify-content-between align-items-center">
-							    asdadas asdasdas dasd asdasd asdasdas d asdasd asdasdasd asdas
-							    <span class="fa fa-times" style="cursor: pointer;"></span>
-							  </li>
-							</ul>	 --}}
 			            </div>
 			            
 					</div>
@@ -163,7 +166,7 @@ active
 						<div style="margin-left: 20px;">
 							<div class="form-group">
 								<label for="adventure_name">Judul Petulangan</label>
-								<input type="text" name="adventure_name" class="form-control" id="adventure_name" placeholder="Judul Petualangan">
+								<input type="text" name="adventure_name" class="form-control" id="adventure_name" placeholder="Judul Petualangan" required>
 							</div>
 
 							<div class="row mb-2">
@@ -171,10 +174,10 @@ active
 									Mulai
 									<div class="row">
 										<div class="col-md-7">
-											<input type="date" name="starting_date" class="form-control">	
+											<input type="date" name="starting_date" class="form-control" required>	
 										</div>
 										<div class="col-md-5">
-											<input type="time" name="starting_time" class="form-control">	
+											<input type="time" name="starting_time" class="form-control" required>	
 										</div>
 									</div>
 								</div>
@@ -183,10 +186,10 @@ active
 									Berakhir
 									<div class="row">
 										<div class="col-md-7">
-											<input type="date" name="ending_date" class="form-control">	
+											<input type="date" name="ending_date" class="form-control" required>	
 										</div>
 										<div class="col-md-5">
-											<input type="time" name="ending_time" class="form-control">	
+											<input type="time" name="ending_time" class="form-control" required>	
 										</div>
 									</div>
 								</div>
@@ -194,17 +197,17 @@ active
 
 							<div class="form-group">
 								<label for="description">Deskripsi Adventure</label>
-								<textarea class="form-control" name="description" placeholder="deskripsi petualangan anda"></textarea>
+								<textarea class="form-control" name="description" placeholder="deskripsi petualangan anda" required></textarea>
 							</div>
 
 							<div class="form-group">
 								<label for="image">Unggah Gambar</label>
-								<input type="file" name="image" class="form-control">
+								<input type="file" name="image" class="form-control" accept="image/*">
 							</div>
 
 							<div class="form-group">
 								<label for="destination">Destinasi</label>
-								<input type="text" name="destination" class="form-control" id="pac-input" placeholder="cari destinasi disini...">
+								<input type="text" name="" class="form-control" id="pac-input" placeholder="cari destinasi disini...">
 							</div>
 
 							<div id="destination-hidden">
@@ -230,6 +233,8 @@ active
 
 @section('script')
 <script>
+	var destination_count = 0;
+
 	$(document).ready(function() {
 		$(window).keydown(function(event){
 			if(event.keyCode == 13) {
@@ -238,126 +243,172 @@ active
 			}
 		});
 	});
-	      // This example requires the Places library. Include the libraries=places
-	      // parameter when you first load the API. For example:
-	      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-	      function initMap() {
-	        var map = new google.maps.Map(document.getElementById('map'), {
-	          center: {lat: -33.8688, lng: 151.2195},
-	          zoom: 13
-	        });
-	        var card = document.getElementById('pac-card');
-	        var input = document.getElementById('pac-input');
-	        var types = document.getElementById('type-selector');
-	        var strictBounds = document.getElementById('strict-bounds-selector');
+	$('input[name=adventure_name]').change(function(){
+		var name = $('input[name=adventure_name]').val();
+		if(name == ''){
+			$('#adventure_name').html('Judul Petualangan');	
+		}else{
+			$('#adventure_name').html(name);
+		}
+		
+	});
 
-	        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
+	function preview(input){
+		if(input.files && input.files[0]){
+			var reader = new FileReader();
 
-	        var autocomplete = new google.maps.places.Autocomplete(input);
+			reader.onload = function(e){
+				$('#background-image').attr('src', e.target.result);
+			}
 
-	        // Bind the map's bounds (viewport) property to the autocomplete object,
-	        // so that the autocomplete requests use the current map bounds for the
-	        // bounds option in the request.
-	        autocomplete.bindTo('bounds', map);
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
 
-	        var infowindow = new google.maps.InfoWindow();
-	        var infowindowContent = document.getElementById('infowindow-content');
-	        infowindow.setContent(infowindowContent);
-	        var marker = new google.maps.Marker({
-	          map: map,
-	          anchorPoint: new google.maps.Point(0, -29)
-	        });
+	$('input[name=image]').change(function(){
+		preview(this);
+	});
 
-	        var destination_count = 0;
+	function remove_destination(count){
+		$('#destination_item_div'+count).remove();
+		$('#destination_item_span'+count).remove();
+		$('#destination'+count).remove();
+		destination_count -= 1;
+		$('#destination-count').val(destination_count);
+	}
 
-	        autocomplete.addListener('place_changed', function() {
-		        infowindow.close();
-		        marker.setVisible(false);
-		        var place = autocomplete.getPlace();
-		        if (!place.geometry) {
-		          // User entered the name of a Place that was not suggested and
-		          // pressed the Enter key, or the Place Details request failed.
-		          window.alert("No details available for input: '" + place.name + "'");
-		          return;
-		        }
+	// This example requires the Places library. Include the libraries=places
+  	// parameter when you first load the API. For example:
+  	// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-		        // If the place has a geometry, then present it on a map.
-		        if (place.geometry.viewport) {
-		          map.fitBounds(place.geometry.viewport);
-		        } else {
-		          map.setCenter(place.geometry.location);
-		          map.setZoom(17);  // Why 17? Because it looks good.
-		        }
-		        marker.setPosition(place.geometry.location);
-		        marker.setVisible(true);
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -33.8688, lng: 151.2195},
+          zoom: 13
+        });
+        var card = document.getElementById('pac-card');
+        var input = document.getElementById('pac-input');
+        var types = document.getElementById('type-selector');
+        var strictBounds = document.getElementById('strict-bounds-selector');
 
-		        var lat = place.geometry.location.lat();
-		        var lng = place.geometry.location.lng();
-		        var location = place.name;
-		        var full_location  = place.formatted_address;
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(card);
 
-		        var destination = 
-		        	"<div class='list-group-item'>" +
-						"<div class='row'>" +
-							"<div class='col-md-10'>" +
-								"<div style='font-weight: bold;'>"+ location +"</div>" +
-								"<div>"+ full_location +"</div>" +
-							"</div>" +
-							"<div class='col-md-2'>" +
-								"<span class='fa fa-times pull-right' style='margin-top: 55%'></span>" +
-							"</div>" +
-						"</div>" +
-					"</div>";
+        var autocomplete = new google.maps.places.Autocomplete(input);
 
-				var destination_hidden = 
-					"<input type='hidden' name='location"+ destination_count +"' value='"+ location +"'></input>" +
-					"<input type='hidden' name='full_location"+ destination_count +"' value='"+ full_location +"'></input>" +
-					"<input type='hidden' name='lat"+ destination_count +"' value='"+ lat +"'></input>" +
-					"<input type='hidden' name='lng"+ destination_count +"' value='"+ lng +"'></input>";
-				
-	          	$('#destination-list').append(destination);
-	          	$('#destination-hidden').append(destination_hidden);
-	          	$('#pac-input').val('');
+        // Bind the map's bounds (viewport) property to the autocomplete object,
+        // so that the autocomplete requests use the current map bounds for the
+        // bounds option in the request.
+        autocomplete.bindTo('bounds', map);
 
-	          	destination_count += 1;
-	          	$('#destination-count').val(destination_count);
+        var infowindow = new google.maps.InfoWindow();
+        var infowindowContent = document.getElementById('infowindow-content');
+        infowindow.setContent(infowindowContent);
+        var marker = new google.maps.Marker({
+          map: map,
+          anchorPoint: new google.maps.Point(0, -29)
+        });
 
-	 	       	var address = '';
-	          	if (place.address_components) {
-	            	address = [
-		              (place.address_components[0] && place.address_components[0].short_name || ''),
-		              (place.address_components[1] && place.address_components[1].short_name || ''),
-		              (place.address_components[2] && place.address_components[2].short_name || '')
-		            ].join(' ');
-		          }
+        if (navigator.geolocation) {
+	    	navigator.geolocation.getCurrentPosition(function (position) {
+	       		initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	        	map.setCenter(initialLocation);
+	   		});
+			}
 
-	          	infowindowContent.children['place-icon'].src = place.icon;
-	          	infowindowContent.children['place-name'].textContent = place.name;
-	          	infowindowContent.children['place-address'].textContent = address;
-	          	infowindow.open(map, marker);
-	        });
-
-	        // Sets a listener on a radio button to change the filter type on Places
-	        // Autocomplete.
-	        function setupClickListener(id, types) {
-	          var radioButton = document.getElementById(id);
-	          radioButton.addEventListener('click', function() {
-	            autocomplete.setTypes(types);
-	          });
+        autocomplete.addListener('place_changed', function() {
+	        infowindow.close();
+	        marker.setVisible(false);
+	        var place = autocomplete.getPlace();
+	        if (!place.geometry) {
+	          // User entered the name of a Place that was not suggested and
+	          // pressed the Enter key, or the Place Details request failed.
+	          window.alert("No details available for input: '" + place.name + "'");
+	          return;
 	        }
 
-	        setupClickListener('changetype-all', []);
-	        setupClickListener('changetype-address', ['address']);
-	        setupClickListener('changetype-establishment', ['establishment']);
-	        setupClickListener('changetype-geocode', ['geocode']);
+	        // If the place has a geometry, then present it on a map.
+	        if (place.geometry.viewport) {
+	          map.fitBounds(place.geometry.viewport);
+	        } else {
+	          map.setCenter(place.geometry.location);
+	          map.setZoom(17);  // Why 17? Because it looks good.
+	        }
+	        marker.setPosition(place.geometry.location);
+	        marker.setVisible(true);
 
-	        document.getElementById('use-strict-bounds')
-	            .addEventListener('click', function() {
-	              console.log('Checkbox clicked! New state=' + this.checked);
-	              autocomplete.setOptions({strictBounds: this.checked});
-	            });
-     	}
+	        var lat = place.geometry.location.lat();
+	        var lng = place.geometry.location.lng();
+	        var location = place.name;
+	        var full_location  = place.formatted_address;
+
+	        var destination = 
+	        	"<div class='list-group-item' id='destination_item_div"+ destination_count +"'>" +
+					"<div class='row'>" +
+						"<div class='col-md-10'>" +
+							"<div style='font-weight: bold;'>"+ location +"</div>" +
+							"<div>"+ full_location +"</div>" +
+						"</div>" +
+						"<div class='col-md-2'>" +
+							"<span id='span-times"+ destination_count +"' class='fa fa-times pull-right' style='margin-top: 55%'></span>" +
+						"</div>" +
+					"</div>" +
+				"</div>";
+
+			var destination_hidden = 
+				"<div id='destination"+ destination_count +"'>" +
+				"<input type='hidden' name='location[]' value='"+ location +"'></input>" +
+				"<input type='hidden' name='full_location[]' value='"+ full_location +"'></input>" +
+				"<input type='hidden' name='lat[]' value='"+ lat +"'></input>" +
+				"<input type='hidden' name='lng[]' value='"+ lng +"'></input>" +
+				"</div>";
+			
+          	$('#destination-list').append(destination);
+          	$('#destination-hidden').append(destination_hidden);
+          	$('#span-times'+destination_count).attr('onclick', "remove_destination(" + destination_count + ")");
+          	$('#pac-input').val('');
+
+          	var destination_preview = "<span class='badge badge-pill badge-success mr-1 mt-1' id='destination_item_span"+ destination_count +"'>"+ location +"</span>";
+          	$('#destination-preview').append(destination_preview);
+
+          	destination_count += 1;
+          	$('#destination-count').val(destination_count);
+
+ 	       	var address = '';
+          	if (place.address_components) {
+            	address = [
+	              (place.address_components[0] && place.address_components[0].short_name || ''),
+	              (place.address_components[1] && place.address_components[1].short_name || ''),
+	              (place.address_components[2] && place.address_components[2].short_name || '')
+	            ].join(' ');
+	          }
+
+          	infowindowContent.children['place-icon'].src = place.icon;
+          	infowindowContent.children['place-name'].textContent = place.name;
+          	infowindowContent.children['place-address'].textContent = address;
+          	infowindow.open(map, marker);
+        });
+
+        // Sets a listener on a radio button to change the filter type on Places
+        // Autocomplete.
+        function setupClickListener(id, types) {
+          var radioButton = document.getElementById(id);
+          radioButton.addEventListener('click', function() {
+            autocomplete.setTypes(types);
+          });
+        }
+
+        setupClickListener('changetype-all', []);
+        setupClickListener('changetype-address', ['address']);
+        setupClickListener('changetype-establishment', ['establishment']);
+        setupClickListener('changetype-geocode', ['geocode']);
+
+        document.getElementById('use-strict-bounds')
+            .addEventListener('click', function() {
+              console.log('Checkbox clicked! New state=' + this.checked);
+              autocomplete.setOptions({strictBounds: this.checked});
+            });
+ 	}
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuzok_jxa1DYFbm0C8xlmt3y4pZW92v9w&libraries=places&callback=initMap"
         async defer></script>

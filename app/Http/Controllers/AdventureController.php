@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Adventure;
 
 class AdventureController extends Controller
 {
@@ -34,7 +35,37 @@ class AdventureController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request;
+        $adventure = new Adventure;
+        $adventure->user_id = Auth::user()->id;
+        $adventure->name = $request->adventure_name;
+        $adventure->start_date = $request->starting_date;
+        $adventure->start_time = $request->starting_time;
+        $adventure->end_date = $request->ending_date;
+        $adventure->end_time = $request->ending_time;
+        $adventure->descriptoin = $request->descriptoin;
+
+        $image = $request->file('image');
+
+        if ($image) {
+            $image_name = 'cover_' . Auth::user()->id . '_' . Str::quickRandom(10) .'.' .$image->getClientOriginalExtension();
+            $adventure->image = $image_name;
+            $image->move(public_path('img/adventure'), $image_name);
+        }
+
+        $adventure->save();
+
+        foreach ($request->location as $key => $loc) {
+            $destination = new Destination;
+            $destination->adventure_id = $adventure->id;
+            $destination->destination = $loc;
+            $destination->full_location = $request->full_location[$key];
+            $destination->lat = $request->lat[$key];
+            $destination->long = $request->lng[$key];
+            $destination->save();
+        }
+
+        return 'sukses';
     }
 
     /**
