@@ -317,29 +317,29 @@ active
 
                         {{-- comment and like icon --}}
                         <div style="margin-top: 30px;" class="action-icon">
-                            <span class="color-text fa fa-comment-o" id="comment-icon{{ $post->id }}" onclick="toggle_comment({{ $post->id }})"></span>
-                            <span class="color-text fa {{ $post->status_like == 1 ? ' fa-thumbs-up' : 'fa-thumbs-o-up'}}" id="like-icon{{ $post->id }}" onclick="like({{ $post->id }})"></span>
+                            <span class="color-text fa fa-comment-o" id="comment-icon{{ $post->id }}" onclick="toggle_comment({{ $post->id }})" style="cursor: pointer;"></span>
+                            <span class="color-text fa {{ $post->status_like == 1 ? ' fa-thumbs-up' : 'fa-thumbs-o-up'}}" id="like-icon{{ $post->id }}" onclick="like({{ $post->id }})" style="cursor: pointer;"></span>
                             <span id="like{{ $post->id }}" class="color-text"></span>
                             <script type="text/javascript">
-                                // window.setInterval(function(){
-                                //     getLike({{ $post->id }});
-                                //     loadComment({{ $post->id }})
-                                // }, 5000);
+                                window.setInterval(function(){
+                                    getLike({{ $post->id }});
+                                    loadComment({{ $post->id }})
+                                }, 5000);
                             </script>    
                         </div>  
                         {{-- post --}}
 	                </div>
 	                <div class="card-footer bg-light">
-	                    <div class="row" id="toggle-comment{{ $post->id }}">
+	                    <div class="row" id="toggle-comment{{ $post->id }}" style="display: none;">
                     		<div class="col-sm-11">
-                    			<input id="comment{{ $post->id }}" type="text" name="comment" class="form-control" placeholder="comment" style="border-style: none;">
+                    			<input id="comment{{ $post->id }}" type="text" name="comment" class="form-control" placeholder="komentar disini.." style="border-style: none;">
                     		</div>
                     		<div class="col-sm-1">
                                 <span class="la la-paper-plane color-text pull-right" style="font-size: 35px; cursor: pointer;" onclick="sendComment({{ $post->id.",".Auth::user()->id }})"></span>
                     		</div>
 	                    </div>
 
-	                  	<div class="row col-sm-12 mt-4" id="comments{{ $post->id }}">
+	                  	<div class="row col-sm-12" style="padding-top: 20px;" id="comments{{ $post->id }}">
 	                  		
 	                  	</div>
 	                </div>
