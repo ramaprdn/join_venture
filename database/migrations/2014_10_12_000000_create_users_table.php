@@ -29,6 +29,8 @@ class CreateUsersTable extends Migration
             $table->string('first_name_key');
             $table->string('last_name_key');
             $table->string('full_name_key');
+            $table->string('img_profile')->default('default_profile.png');
+            $table->string('img_home')->default('default_home.png');
             $table->timestamps();
         });
     }

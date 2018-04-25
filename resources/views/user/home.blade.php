@@ -47,7 +47,8 @@ active
         object-fit: cover;
     }
     .image-profile {
-        max-width: 80px; 
+        width: 80px; 
+        height: 80px;
         margin-top: 70px;
         margin-left: 15px; 
         border: 2px solid;
@@ -202,18 +203,18 @@ active
     <div class="row">   
         <div class="col-md-4 col-sm-12">
             <div class="card card-rounded">
-                <img style="position: relative;" class="image-home" src="{{asset('img/nearby-1.jpg')}}"> 
+                <img style="position: relative;" class="image-home" src="/img/users/{{ Auth::user()->img_home }}"> 
                 <div style="position: absolute;">
-                    <img class="rounded-circle image-profile" src="{{asset('img/profile.jpg')}}">
+                    <img class="rounded-circle image-profile" src="img/users/{{ Auth::user()->img_profile }}" style="background-color: #CCC">
                 </div>
                 <div class="card-body">
                     <div class="green-text">
                         <br>
                         <h5><b>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</b></h5>
                         <small class="color-text">"Living Like Larry"</small>
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn" style="border-radius: 50px;"><b>></b></button>
-                        </div>
+                        <div class="text-right">
+                            <a href="{{ route('profile')}}"><i class="fa fa-cog" aria-hidden="true" style="width: 20px;"></i></a>
+                        </div>                       
                     </div>
                 </div>
             </div>
