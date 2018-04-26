@@ -8,7 +8,7 @@
 		</div>
 	</div>
 	<div class="col-sm-11">
-		<p style="margin-bottom: 0px;"><b>{{ $comment->user->first_name.' '.$comment->user->last_name }}</b><span> {{ $comment->comment }}</span></p>
-		<p style="font-size: 10px; color: #ccc">{{ $time->time_elapsed_string($comment->created_at) }}</p> 
+		<p style="margin-bottom: 0px;"><b>{{ $comment->user->first_name.' '.$comment->user->last_name }}</b><span style="font-size: 10px; color: #ccc"> {{ $time->time_elapsed_string($comment->created_at) }}</span></p>
+		<p>{{ $comment->comment }}</p> 
 	</div>
 @endforeach

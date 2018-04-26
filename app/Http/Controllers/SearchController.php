@@ -6,24 +6,15 @@ use Illuminate\Http\Request;
 use App\User;
 use DB;
 use Auth;
+use App\Adventure;
 
 class SearchController extends Controller
 {
-    public function search(Request $query){
-    	$search_string = $query->q;
-    	$query = preg_replace('/[^\p{L}\p{N}\s]/u', '', $query->q);
+    public function search(Request $request){
+    	$search_string = $request->q;
+    	$query = preg_replace('/[^\p{L}\p{N}\s]/u', '', $request->q);
     	$query = Metaphone::metaphoneIndo($query);
     	
-    	// $query = metaphone($query);
-    	// return $query;
-    	// $users = DB::table('users')->where('status', '=', 1)
-    	// 			->where('id', '<>', Auth::user()->id)
-    	// 			->where(function($q) use ($query){
-    	// 				$q->orWhere('first_name_key', 'like', '%'.$query. '%')
-    	// 				->orWhere('last_name_key', 'like', '%'.$query. '%')
-    	// 				->orWhere('full_name_key', 'like', '%'.$query. '%');
-    	// 			})
-    	// 			->get();
     	return view('search.result', compact('query', 'search_string'));
     }
 
@@ -80,5 +71,19 @@ class SearchController extends Controller
     		->select('users.*')
     		->get();
     	return view('ajax.search.followedFriend', compact('friends'));
+    }
+
+    public function searchAdventure(Request $request){
+        $adventures = Adventure::with('destination')
+            ->join('destinations', 'adventure_id', '=', 'adventures.id')
+            ->where('name', 'like' , '%'.$request->search. '%')
+            ->orWhere('name_key', 'like' , '%'.$request->q. '%')    
+            ->orWhere('description', 'like', '%'.$request->search. '%')
+            ->orWhere('full_location', 'like', '%'.$request->search. '%')
+            ->select('adventures.*')
+            ->distinct()
+            ->get();
+        // return $adventures;
+        return view('ajax.search.adventure', compact('adventures'));
     }
 }

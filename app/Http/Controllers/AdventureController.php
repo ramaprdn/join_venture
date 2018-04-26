@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Adventure;
 use App\Destination;
 use Auth;
+use App\Http\Controllers\Metaphone;
 
 class AdventureController extends Controller
 {
@@ -37,7 +38,7 @@ class AdventureController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
+        // return Metaphone::metaphoneIndo($request->adventure_name);
         $adventure = new Adventure;
         $adventure->user_id = Auth::user()->id;
         $adventure->name = $request->adventure_name;
@@ -46,6 +47,7 @@ class AdventureController extends Controller
         $adventure->end_date = $request->ending_date;
         $adventure->end_time = $request->ending_time;
         $adventure->description = $request->description;
+        $adventure->name_key = Metaphone::metaphoneIndo($request->adventure_name);
 
         $image = $request->file('image');
 
@@ -53,6 +55,8 @@ class AdventureController extends Controller
             $image_name = 'cover_' . Auth::user()->id . '_' . time() .'.' .$image->getClientOriginalExtension();
             $adventure->image = $image_name;
             $image->move(public_path('img/adventure'), $image_name);
+        }else{
+            $adventure->image = 'default.jpg';
         }
 
         $adventure->save();
@@ -78,7 +82,11 @@ class AdventureController extends Controller
      */
     public function show($id)
     {
-        //
+        $adventure = Adventure::where('id', $id)
+            ->with('destination')
+            ->first();
+
+        return view('adventure.detail', compact('adventure'));
     }
 
     /**
@@ -89,7 +97,7 @@ class AdventureController extends Controller
      */
     public function edit($id)
     {
-        //
+        return $id;
     }
 
     /**

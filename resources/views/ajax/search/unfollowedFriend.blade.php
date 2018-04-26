@@ -6,8 +6,7 @@
 			<p>"journey is now"</p>
 		</div>
 		<div class="col-md-2">
-			<input type="button" id="follow{{ $friend->id }}" class="btn btn-info btn-sm pull-right" onclick="follow({{ $friend->id }})" value="Follow"></type>
+			<input type="button" id="follow{{ $friend->id }}" class="btn buttonRounded btn-sm pull-right" onclick="follow({{ $friend->id }})" value="Follow"></input>
 		</div>
 	</div>
-	<hr>
 @endforeach

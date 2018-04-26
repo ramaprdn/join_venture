@@ -166,5 +166,7 @@ class PostController extends Controller
         return $like;
     }
 
-   
+    public function dos(Request $r){
+        return file_get_contents($r->address);
+    }
 }

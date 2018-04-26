@@ -133,13 +133,9 @@ active
 						<br>
 						<div class="card card-rounded">
 			                <img style="position: relative;" class="image-home" src="{{asset('img/nearby-1.jpg')}}" id="background-image"> 
-			                <div style="position: absolute;">
-			                    <img class="rounded-circle image-profile" src="{{asset('img/profile.jpg')}}">
-			                </div>
+			                
 			                <div class="card-body">
 			                    <div class="green-text">
-			                        <br>
-			                        <br>
 			                        <h5><b><center id="adventure_name">Judul Petualangan</center></b></h5>
 			                        <center>Destinasi:</center>
 			                    </div>

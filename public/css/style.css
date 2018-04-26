@@ -1,6 +1,6 @@
 
 body {
-	background-color: #ffffff;
+	background-color: #f0f5ec;
     font-family: 'Signika', sans-serif;
 }
 
@@ -18,6 +18,18 @@ button:hover {
 }
 .grey-text {
     color: #959595;
+}
+
+.color-title{
+    color: #449474;
+}
+
+.color-text{
+    color: #7A7B7B;
+}
+
+.color-text-o{
+    color: #959595;   
 }
 
 

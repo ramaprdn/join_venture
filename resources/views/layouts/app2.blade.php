@@ -17,6 +17,12 @@
         nav{
             background-color: #fff !important;
         }
+
+        #search{
+            outline: none;
+            box-shadow:none !important;    
+        }
+        
     </style>
     @yield('css')
 </head>
@@ -31,8 +37,15 @@
 
             <div class="collapse navbar-collapse ml-3" id="navbarSupportedContent">
                 <ul class="navbar-nav col-md-5 mr-auto">
-                    <form action="/search" method="get" class="col-sm-12" style="margin-bottom: 0px !important;">
-                        <input class="form-control mr-sm-2 buttonRounded" type="search" placeholder="Search" name="q" aria-label="Search">
+                    <form action="/search" method="get" class="col-sm-12" id="form-search" style="margin-bottom: 0px !important;">
+                        <div class="row" style="border: 1px solid #dfdfdf;" class="buttonRounded">
+                            <div class="col-md-10">
+                                <input class="form-control mr-sm-2 buttonRounded" type="text" id="search" placeholder="Search" name="q" aria-label="Search" style="border-style: none;">    
+                            </div>
+                            <div class="col-md-2" style="padding-left: 0px;">
+                                <span class="fa fa-search pull-right color-title" style="font-size: 20px; margin-top: 20%; cursor: pointer;" onclick="search()"></span>
+                            </div>
+                        </div>
                     </form>
                 </ul>
 
@@ -75,7 +88,11 @@
 
     @yield('section')
 
-	
+	<script type="text/javascript">
+        function search(){
+            $('#form-search').submit();
+        }   
+    </script>
     @yield('script')
 </body>
 </html>

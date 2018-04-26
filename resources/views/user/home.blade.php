@@ -125,18 +125,6 @@ active
     .card-body{
         padding-bottom: 5px !important;
     }
-
-    .color-title{
-        color: #449474;
-    }
-
-    .color-text{
-        color: #7A7B7B;
-    }
-
-    .color-text-o{
-        color: #959595;   
-    }
 </style>
 <script type="text/javascript" async>
 	function getPostImage(post_id){
@@ -187,7 +175,6 @@ active
                 }else{
                     $('#like'+post_id).html('');
                 }
-                getLike(post_id);
             },
             error: function(){
                 // alert('error like');
@@ -308,8 +295,6 @@ active
                         </div>
                         <script type="text/javascript">
                             getPostImage({{ $post->id }});
-                            // loadComment({{ $post->id }});
-
                         </script>
                         <div class="imagelist" id="imagelist{{ $post->id }}">
                             {{-- ajax --}}
@@ -322,7 +307,6 @@ active
                             <span id="like{{ $post->id }}" class="color-text"></span>
                             <script type="text/javascript">
                                 window.setInterval(function(){
-                                    getLike({{ $post->id }});
                                     loadComment({{ $post->id }})
                                 }, 5000);
                             </script>    
@@ -344,6 +328,9 @@ active
 	                  	</div>
 	                </div>
 	            </div>
+                <script type="text/javascript">
+                    getLike({{ $post->id }});
+                </script>
             @endforeach()
             
         </div>
@@ -417,6 +404,7 @@ active
                 }else{
                     $('#like-icon' + post_id).attr('class', 'color-text fa fa-thumbs-o-up');
                 }
+                getLike(post_id);
             }
         })
     }

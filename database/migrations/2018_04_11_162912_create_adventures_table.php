@@ -24,6 +24,7 @@ class CreateAdventuresTable extends Migration
             $table->time('end_time');
             $table->text('description');
             $table->string('image');
+            $table->string('name_key');
             $table->timestamps();
         });
     }
