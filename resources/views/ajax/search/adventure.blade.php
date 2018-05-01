@@ -10,7 +10,7 @@
 	                <center>Destinasi:</center>
 	            </div>
 	            <div class="row">
-	            	<div class="" style="margin: 0 auto;" id="destination-preview">
+	            	<div class="" style="margin: 0 auto; height: 50px; overflow: hidden;" id="destination-preview">
 	            		@foreach($adventure->destination as $dest)
 	            			<span class='badge badge-pill badge-success mr-1 mt-1' id='destination_item_span"+ destination_count +"'>{{ $dest->destinations }}</span>
 	            		@endforeach

@@ -7,6 +7,7 @@ use App\Adventure;
 use App\Destination;
 use Auth;
 use App\Http\Controllers\Metaphone;
+use App\Partisipant;
 
 class AdventureController extends Controller
 {
@@ -71,6 +72,12 @@ class AdventureController extends Controller
             $destination->save();
         }
 
+
+        $partisipant = new Partisipant;
+        $partisipant->user_id = Auth::user()->id;
+        $partisipant->adventure_id = $adventure->id;
+        $partisipant->save();
+
         return redirect('/home');
     }
 
@@ -86,7 +93,22 @@ class AdventureController extends Controller
             ->with('destination')
             ->first();
 
-        return view('adventure.detail', compact('adventure'));
+        $partisipants = Partisipant::with('user')
+            ->where('adventure_id', $id)
+            ->where('status', 1)
+            ->get();
+
+        $partisipants_count = Partisipant::with('user')
+            ->where('adventure_id', $id)
+            ->where('status', 1)
+            ->count();
+
+        $user_status_to_adventure = Partisipant::where('user_id', Auth::user()->id)
+            ->where('adventure_id', $id)
+            ->first();
+
+        // return $user_status_to_adventure;
+        return view('adventure.detail', compact('adventure', 'partisipants', 'partisipants_count', 'user_status_to_adventure'));
     }
 
     /**
@@ -121,5 +143,42 @@ class AdventureController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function join_this($id){
+        $is_join = Partisipant::where('user_id', Auth::user()->id)
+            ->where('adventure_id', $id)
+            ->first();
+
+        // return $is_join;
+
+        if (sizeof($is_join) == 1 && $is_join->status == 1) {
+            $partisipant = Partisipant::find($is_join->id);
+            $partisipant->status = 0;
+            $partisipant->save();
+            
+        }else if(sizeof($is_join) == 1 && $is_join->status == 0){
+            $partisipant = Partisipant::find($is_join->id);
+            $partisipant->status = 1;
+            $partisipant->save();
+            
+        }else{
+            $partisipant = new Partisipant;
+            $partisipant->user_id = Auth::user()->id;
+            $partisipant->adventure_id = $id;
+            $partisipant->save();
+        }
+
+        return redirect('/adventure/'.$id);
+    }
+
+    public function get_partisipants($id){
+        $partisipants = Partisipant::with('user')
+            ->where('adventure_id', $id)
+            ->where('status', 1)
+            ->get();
+
+        return $partisipants;
+
     }
 }

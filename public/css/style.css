@@ -13,6 +13,21 @@ button:hover {
     transition: 0.5s;
 }
 
+a {
+    color: #549886;
+}
+
+a:hover {
+    color: #549886;
+    opacity: 0.6 !important;
+    transition: 0.5s;
+    text-decoration: none;
+}
+
+i.fa {
+     font-size: 2.5em; 
+}
+
 .green-text {
     color: #549886;
 }
@@ -39,4 +54,8 @@ button:hover {
 
 .card-rounded {
     border-radius: 15px;
+}
+
+.card-footer{
+    background-color: #f1ecec !important;
 }
