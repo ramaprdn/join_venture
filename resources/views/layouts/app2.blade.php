@@ -54,9 +54,9 @@
                         <li class="nav-item @yield('story') mx-2">
                             <a class="nav-link" href="/">Story</a>
                         </li>
-                        <!-- <li class="nav-item mx-2">
-                            <a class="nav-link" href="#">Adventure Browser</a>
-                        </li> -->
+                        <li class="nav-item mx-2">
+                            <a class="nav-link" href="#">Your Story</a>
+                        </li>
                         <li class="nav-item @yield('adventure') mx-2">
                             <a class="nav-link" href="/adventure/create">Create Adventure</a>
                         </li>

@@ -152,12 +152,12 @@ class AdventureController extends Controller
 
         // return $is_join;
 
-        if (sizeof($is_join) == 1 && $is_join->status == 1) {
+        if ( $is_join->status == 1) {
             $partisipant = Partisipant::find($is_join->id);
             $partisipant->status = 0;
             $partisipant->save();
             
-        }else if(sizeof($is_join) == 1 && $is_join->status == 0){
+        }else if($is_join->status == 0){
             $partisipant = Partisipant::find($is_join->id);
             $partisipant->status = 1;
             $partisipant->save();
