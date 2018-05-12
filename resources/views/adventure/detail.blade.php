@@ -95,13 +95,13 @@
 		</div>
 	</div>
 
-	<form action="{{ route('discussion.store') }}" method="post">
+	<form action="{{ route('discussion.store', $adventure->id) }}" method="post">
 		@csrf
 		<div class="card">
 			<div class="card-description" style="margin-top: 16px;">
 				<div class="row" id="">
 		    		<div class="col-sm-11">
-		    			<input id="" type="text" name="comment" class="form-control" placeholder="tanyakan keperluan anda disini.." required>
+		    			<input id="" type="text" name="topic" class="form-control" placeholder="tanyakan keperluan anda disini.." required>
 		    		</div>
 		    		<div class="col-sm-1">
 		    			<button type="submit" style="background-color: transparent; border-style: none;">
@@ -113,49 +113,48 @@
 		</div>
 	</form>
 
-	<div class="card">
-        <div class="card-body" style="padding: 16px;">
-            {{-- post --}}
-            <h5 class="green-text" style="font-weight: bold; margin-bottom: 0px;">Rama Pradana</h5>
-            @php
-                $time = new App\Http\Controllers\TimeForHumans; 
-            @endphp
-            <p style="margin-top: 0; font-size: 11px;" class="color-text-o">5 mnt yang lalu<p>
-            <div style="font-size: 14px;" class="color-text">
-                halo kak  
-            </div>
+	@foreach($discussions as $discussion)
+		<div class="card">
+	        <div class="card-body" style="padding: 16px;">
+	            {{-- post --}}
+	            <h5 class="green-text" style="font-weight: bold; margin-bottom: 0px;">{{$discussion->user->first_name.' '.$discussion->user->last_name}}</h5>
+	            @php
+	                $time = new App\Http\Controllers\TimeForHumans; 
+	            @endphp
+	            <p style="margin-top: 0; font-size: 11px;" class="color-text-o"><p>
+	            <div style="font-size: 14px;" class="color-text">
+	                halo kak  
+	            </div>
 
-            {{-- comment and like icon --}}
-            <div style="margin-top: 30px;" class="action-icon">
-                <span class="color-text fa fa-comment-o" id="comment-icon" onclick="toggle_comment(1)" style="cursor: pointer;"></span>
-                <span class="color-text fa " id="like-icon" onclick="like()" style="cursor: pointer;"></span>
-                <span id="like" class="color-text"></span>
-                {{-- <script type="text/javascript">
-                    window.setInterval(function(){
-                        loadComment({{ $post->id }})
-                    }, 5000);
-                </script>     --}}
-            </div>  
-            {{-- post --}}
-        </div>
-        <div class="card-footer bg-light">
-            <div class="row" id="toggle-comment1" style="display: none;">
-        		<div class="col-sm-11">
-        			<input id="comment" type="text" name="comment" class="form-control" placeholder="komentar disini.." style="border-style: none;">
-        		</div>
-        		<div class="col-sm-1">
-                    <span class="la la-paper-plane color-text pull-right" style="font-size: 35px; cursor: pointer;" onclick="sendComment()"></span>
-        		</div>
-            </div>
+	            {{-- comment and like icon --}}
+	            <div style="margin-top: 30px;" class="action-icon">
+	                <span class="color-text fa fa-comment-o" id="comment-icon" onclick="toggle_comment(1)" style="cursor: pointer;"></span>
+	                <span class="color-text fa " id="like-icon" onclick="like()" style="cursor: pointer;"></span>
+	                <span id="like" class="color-text"></span>
+	                {{-- <script type="text/javascript">
+	                    window.setInterval(function(){
+	                        loadComment({{ $post->id }})
+	                    }, 5000);
+	                </script>     --}}
+	            </div>  
+	            {{-- post --}}
+	        </div>
+	        <div class="card-footer bg-light">
+	            <div class="row" id="toggle-comment1" style="display: none;">
+	        		<div class="col-sm-11">
+	        			<input id="comment" type="text" name="comment" class="form-control" placeholder="komentar disini.." style="border-style: none;">
+	        		</div>
+	        		<div class="col-sm-1">
+	                    <span class="la la-paper-plane color-text pull-right" style="font-size: 35px; cursor: pointer;" onclick="sendComment()"></span>
+	        		</div>
+	            </div>
 
-          	<div class="row col-sm-12" style="padding-top: 20px;" id="comments">
-          		
-          	</div>
-        </div>
-    </div>{{-- 
-    <script type="text/javascript">
-        getLike({{ $post->id }});
-    </script> --}}
+	          	<div class="row col-sm-12" style="padding-top: 20px;" id="comments">
+	          		
+	          	</div>
+	        </div>
+	    </div>
+    @endforeach
 </div>
 
 <!-- Modal -->

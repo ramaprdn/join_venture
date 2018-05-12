@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Discussion;
 use Illuminate\Http\Request;
+use Auth;
 
 class DiscussionController extends Controller
 {
@@ -12,9 +13,15 @@ class DiscussionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -33,9 +40,17 @@ class DiscussionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        return 'store';
+
+        $new_discussion = new Discussion;
+        $new_discussion->user_id = Auth::user()->id;
+        $new_discussion->adventure_id = $id;
+        $new_discussion->topic = $request->topic;
+        $new_discussion->save();
+
+        return redirect(route('adventure.show', $id));
+
     }
 
     /**

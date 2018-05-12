@@ -36,4 +36,4 @@ Route::get('/search/adventure', 'SearchController@searchAdventure');
 Route::get('/post/like/{post_id}/count', 'PostController@whoLikeThisPost');
 Route::get('/adventure/{adventure_id}/join', 'AdventureController@join_this')->name('adventure.join');
 Route::get('/adventure/{adventure_id}/partisipant', 'AdventureController@get_partisipants');
-Route::resource('/adventure/discussion', 'DiscussionController');
+Route::resource('/adventure/{id}/discussion', 'DiscussionController');

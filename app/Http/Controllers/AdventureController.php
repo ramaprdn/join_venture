@@ -8,6 +8,7 @@ use App\Destination;
 use Auth;
 use App\Http\Controllers\Metaphone;
 use App\Partisipant;
+use App\Discussion;
 
 class AdventureController extends Controller
 {
@@ -107,8 +108,13 @@ class AdventureController extends Controller
             ->where('adventure_id', $id)
             ->first();
 
+        $discussions = Discussion::with('user')
+            ->where('adventure_id', $id)
+            ->get();
+
+        // return $discussions;
         // return $user_status_to_adventure;
-        return view('adventure.detail', compact('adventure', 'partisipants', 'partisipants_count', 'user_status_to_adventure'));
+        return view('adventure.detail', compact('adventure', 'partisipants', 'partisipants_count', 'user_status_to_adventure', 'discussions'));
     }
 
     /**
