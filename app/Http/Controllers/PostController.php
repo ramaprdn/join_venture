@@ -88,7 +88,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+
+        if(auth()->user()->id != $post->user_id) {
+            return redirect(route('home'));
+        }
     }
 
     /**
@@ -100,7 +104,16 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'description' => 'required'
+        ]);
+
+        // Update Post
+        $post = Post::find($id);
+        $post->description = $request->input('description');
+        $post->save();
+
+        return redirect(route('home'));
     }
 
     /**
@@ -111,7 +124,13 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        if ($post->status == 1) {
+            $post->status = 0;
+            $post->save();
+        }
+
+        return redirect(route('home'));    
     }
 
 
@@ -126,7 +145,7 @@ class PostController extends Controller
 
     public function like($post_id){
         $liked = Like::where('post_id', $post_id)->where('user_id', Auth::user()->id)->first();
-        if (sizeof($liked) > 0) {
+        if (!empty($liked)) {
             if ($liked->status == 1) {
                 $liked->status = 0;
                 $liked->save();
@@ -166,7 +185,4 @@ class PostController extends Controller
         return $like;
     }
 
-    public function dos(Request $r){
-        return file_get_contents($r->address);
-    }
 }

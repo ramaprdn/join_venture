@@ -23,15 +23,15 @@ active
 		margin-right: 2px; 
 	}
 
-    .fa{
-        font-size:20px;
-    }
-
 	.imagelist > a > img{
 		max-height: 100px;	
 	}
 
 	/*style tambahan*/
+
+    .post > .dropdown-toggle::after{
+        display: none;
+    }
     
     .card-timeline-title {
         border-top-left-radius: 0px;
@@ -200,7 +200,7 @@ active
                         <h5><b>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</b></h5>
                         <small class="color-text">"Living Like Larry"</small>
                         <div class="text-right">
-                            <a href="{{ route('profile')}}"><i class="fa fa-cog" aria-hidden="true" style="width: 20px;"></i></a>
+                            <a href="{{ route('profile')}}"><i class="fa fa-cog" aria-hidden="true" style="font-size: 2.5em; width: 20px;"></i></a>
                         </div>                       
                     </div>
                 </div>
@@ -235,25 +235,21 @@ active
                         </div>
                         
                         <br>
-                        <h5><b>Nearby Adventure</b></h5>
+                        <h5><b>Petualanganmu</b></h5>
+                        <hr>
                         <div class="vertical-scroll-wrapper">
-                            <div><a href="#" class="green-text"><p>Denpasar</p></a></div>
-                            <hr>
-                            <div><p>Badung</p></div>
-                            <hr>
-                            <div><p>Gianyar</p></div>
-                            <hr>
-                            <div><p>Bangli</p></div>
-                            <hr>
-                            <div><p>Tabanan</p></div>
-                            <hr>
-                            <div><p>Karangasem</p></div>
-                            <hr>
-                            <div><p>Jembrana</p></div>
-                            <hr>
-                            <div><p>Klungkung</p></div>
-                            <hr>
-                            <div><p>Singaraja</p></div>
+                            @if(count($user_adventure) > 0)
+                                @foreach($user_adventure as $adventure)
+                                    <div>
+                                        <a href="{{ route('adventure.show', $adventure->id) }}">{{ $adventure->adventure_name }}</a>
+                                    </div>
+                                    <hr>
+                                @endforeach
+                            @else
+                                <div>
+                                    <p>Belum ada petualangan yang diikuti</p>   
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -282,58 +278,100 @@ active
             </div>
             <br>
 
+           
             @foreach($user_friend_post as $post)
-            	<div class="card mb-2 card-rounded">
-	                <div class="card-body">
-                        {{-- post --}}
-                        <h5 class="green-text" style="font-weight: bold; margin-bottom: 0px;">{{ $post->first_name." ".$post->last_name}}</h5>
-                        @php
-                            $time = new App\Http\Controllers\TimeForHumans; 
-                        @endphp
-                        <p style="margin-top: 0; font-size: 11px;" class="color-text-o">{{ $time->time_elapsed_string($post->created_at) }}<p>
-                        <div style="font-size: 14px;" class="color-text">
-                            {!! $post->description !!}  
-                        </div>
-                        <script type="text/javascript">
-                            getPostImage({{ $post->id }});
-                        </script>
-                        <div class="imagelist" id="imagelist{{ $post->id }}">
-                            {{-- ajax --}}
-                        </div>
+                @if($post->status==1)
+                	<div class="card mb-2 card-rounded">
+    	                <div class="card-body">
+                            {{-- post --}}
+                            <div class="dropdown d-flex justify-content-end post">
+                                @if(Auth::user()->id == $post->user_id)
+                                    <a href="" class="dropdown-toggle" data-toggle="dropdown" style="color: #000;"><i style="font-size: 1.2em;" class="fa fa-ellipsis-h grey-text" aria-hidden="true"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="{{ route( 'post.edit', $post->id) }}" data-toggle="modal" data-target="#editModal{{$post->id}}">Edit</a>
+                                        <form action="{{ route('post.destroy', $post->id) }}" method="post">
+                                            @csrf
+                                            {{ method_field('DELETE') }}
+                                            <button class="dropdown-item" type="submit">Delete</button>
+                                        </form>
+                                    </div>
+                                @endif
+                            </div>
 
-                        {{-- comment and like icon --}}
-                        <div style="margin-top: 30px;" class="action-icon">
-                            <span class="color-text fa fa-comment-o" id="comment-icon{{ $post->id }}" onclick="toggle_comment({{ $post->id }})" style="cursor: pointer;"></span>
-                            <span class="color-text fa {{ $post->status_like == 1 ? ' fa-thumbs-up' : 'fa-thumbs-o-up'}}" id="like-icon{{ $post->id }}" onclick="like({{ $post->id }})" style="cursor: pointer;"></span>
-                            <span id="like{{ $post->id }}" class="color-text"></span>
+                            {{-- Modal Edit Post --}}
+                            <form action="{{ route('post.update', $post->id) }}" method="post" class="modal fade" id="editModal{{$post->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                @csrf
+                                {{ method_field('PUT') }}
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    <div class="modal-body">
+                                    <div class="form-group">
+                                        <textarea class="form-control bg-light card-rounded" name="description" required>{{$post->description}}</textarea>
+                                    </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn buttonRounded btn-outline-secondary" data-dismiss="modal">Batal</button>
+                                        <button type="submit" class="btn buttonRounded">Simpan</button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <h5 class="green-text" style="font-weight: bold; margin-bottom: 0px;">{{ $post->first_name." ".$post->last_name}}</h5>
+                            @php
+                                $time = new App\Http\Controllers\TimeForHumans; 
+                            @endphp
+                            <p style="margin-top: 0; font-size: 11px;" class="color-text-o">{{ $time->time_elapsed_string($post->created_at) }}<p>
+                            <div style="font-size: 14px;" class="color-text">
+                                {!! $post->description !!}  
+                            </div>
                             <script type="text/javascript">
-                                window.setInterval(function(){
-                                    loadComment({{ $post->id }})
-                                }, 5000);
-                            </script>    
-                        </div>  
-                        {{-- post --}}
-	                </div>
-	                <div class="card-footer bg-light">
-	                    <div class="row" id="toggle-comment{{ $post->id }}" style="display: none;">
-                    		<div class="col-sm-11">
-                    			<input id="comment{{ $post->id }}" type="text" name="comment" class="form-control" placeholder="komentar disini.." style="border-style: none;">
-                    		</div>
-                    		<div class="col-sm-1">
-                                <span class="la la-paper-plane color-text pull-right" style="font-size: 35px; cursor: pointer;" onclick="sendComment({{ $post->id.",".Auth::user()->id }})"></span>
-                    		</div>
-	                    </div>
+                                getPostImage({{ $post->id }});
+                            </script>
+                            <div class="imagelist" id="imagelist{{ $post->id }}">
+                                {{-- ajax --}}
+                            </div>
 
-	                  	<div class="row col-sm-12" style="padding-top: 20px;" id="comments{{ $post->id }}">
-	                  		
-	                  	</div>
-	                </div>
-	            </div>
-                <script type="text/javascript">
-                    getLike({{ $post->id }});
-                </script>
+                            {{-- comment and like icon --}}
+                            <div style="margin-top: 30px;" class="action-icon">
+                                <span class="color-text fa fa-comment-o" id="comment-icon{{ $post->id }}" onclick="toggle_comment({{ $post->id }})" style="cursor: pointer;"></span>
+                                <span class="color-text fa {{ $post->status_like == 1 ? ' fa-thumbs-up' : 'fa-thumbs-o-up'}}" id="like-icon{{ $post->id }}" onclick="like({{ $post->id }})" style="cursor: pointer;"></span>
+                                <span id="like{{ $post->id }}" class="color-text"></span>
+                                <script type="text/javascript">
+                                    window.setInterval(function(){
+                                        loadComment({{ $post->id }})
+                                    }, 5000);
+                                </script>    
+                            </div>  
+                            {{-- post --}}
+    	                </div>
+    	                <div class="card-footer bg-light">
+    	                    <div class="row" id="toggle-comment{{ $post->id }}" style="display: none;">
+                        		<div class="col-sm-11">
+                        			<input id="comment{{ $post->id }}" type="text" name="comment" class="form-control" placeholder="komentar disini.." style="border-style: none;">
+                        		</div>
+                        		<div class="col-sm-1">
+                                    <span class="la la-paper-plane color-text pull-right" style="font-size: 35px; cursor: pointer;" onclick="sendComment({{ $post->id.",".Auth::user()->id }})"></span>
+                        		</div>
+    	                    </div>
+
+    	                  	<div class="row col-sm-12" style="padding-top: 20px;" id="comments{{ $post->id }}">
+    	                  		
+    	                  	</div>
+    	                </div>
+    	            </div>
+                    <script type="text/javascript">
+                        getLike({{ $post->id }});
+                    </script>
+                @endif
             @endforeach()
-            
+         
         </div>
     </div>
 </div>

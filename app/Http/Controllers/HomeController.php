@@ -7,6 +7,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Friend;
 use DB;
+use App\Adventure;
 
 
 class HomeController extends Controller
@@ -32,7 +33,7 @@ class HomeController extends Controller
             ->join('users', 'user_id', '=', 'users.id')
             ->leftJoin('likes', 'likes.post_id' ,'=', 'posts.id')
             ->where('posts.user_id', Auth::user()->id)
-            ->select('posts.id', 'posts.user_id', 'first_name', 'last_name', 'description', 'posts.created_at', 'likes.status as status_like');
+            ->select('posts.id as id','posts.status as status', 'posts.user_id', 'first_name', 'last_name', 'description', 'posts.created_at', 'likes.status as status_like');
 
         $user_friend_post = DB::table('friends')
             ->join('users as user', 'user.id', '=', 'user_id')
@@ -40,12 +41,21 @@ class HomeController extends Controller
             ->join('users as friend', 'friend.id', '=', 'friend_user_id')
             ->leftJoin('likes', 'likes.id' ,'=', 'posts.id')
             ->where('user.id', Auth::user()->id)
-            ->select('posts.id', 'friend.id as user_id', 'friend.first_name', 'friend.last_name', 'description', 'posts.created_at', 'likes.status as status_like')
+            ->where('friends.status_following', '1')
+            ->select('posts.id as id', 'posts.status as status', 'friend.id as user_id', 'friend.first_name', 'friend.last_name', 'description', 'posts.created_at', 'likes.status as status_like')
             ->union($user_post)->orderBy('created_at', 'desc')->get();
+
+        $user_adventure = DB::table('partisipants')
+            ->join('users', 'user_id', '=', 'users.id' )
+            ->join('adventures', 'partisipants.adventure_id', 'adventures.id')
+            ->where('partisipants.user_id', Auth::user()->id)
+            ->where('partisipants.status', '1')
+            ->select('adventures.id as id','adventures.user_id as adventure_user_id', 'adventures.name as adventure_name')->get(); 
+
         
         
         // $time = new TimeForHumans; 
         // return $time->time_elapsed_string($user_friend_post[0]->created_at);
-        return view('user.home', compact('user_friend_post'));
+        return view('user.home', compact('user_friend_post', 'user_adventure'));
     }
 }
