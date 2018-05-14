@@ -46,4 +46,8 @@ class User extends Authenticatable
     public function discussion(){
         return $this->hasMany('App\Discussion');
     }
+
+    public function disc_comment(){
+        return $this->hasMany('App\AdventureComment');   
+    }
 }

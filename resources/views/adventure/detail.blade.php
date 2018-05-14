@@ -7,7 +7,6 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.fancybox.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('css/line-awesome.min.css') }}">
-
 <style type="text/css">
 	.card-body{
 		padding: 0px;
@@ -52,6 +51,19 @@
 		padding-bottom: 0px;
 	}
 </style>
+<script type="text/javascript">
+	
+	function load_comment(id, disc_id){
+		var url = "/adventure/"+id+"/discussions/"+disc_id+"/load-comment";
+		$.ajax({
+			type:'get',
+			url:url,
+			success:function(data){
+				$('#comments'+disc_id).html(data);
+			}
+		})
+	}
+</script>
 @endsection
 
 @section('section')
@@ -87,7 +99,9 @@
 				</div>
 			</div>
 			<div style="padding: 16px;">
+				@if($adventure->user_id != Auth::user()->id)
 				<a href="{{route('adventure.join', $adventure->id)}}" class="btn btn-info"><span class="la {{($user_status_to_adventure != null && $user_status_to_adventure->status == 1) ? 'la-sign-out' : 'la-sign-in'}}"></span>{{($user_status_to_adventure != null && $user_status_to_adventure->status == 1) ? 'Keluar' : 'Join'}}</a>
+				@endif
 				<a href="" id="btn-desc" class="btn btn-info" data-toggle="collapse" data-target="#description" aria-expanded="true" aria-controls="description" onclick="toggle_description()">lebih banyak</a>
 				<a href="" class="pull-right" data-toggle="modal" data-target="#exampleModal">{{ $partisipants_count }} orang ikut di petualangan ini</a>	
 			</div>
@@ -116,42 +130,39 @@
 	@foreach($discussions as $discussion)
 		<div class="card">
 	        <div class="card-body" style="padding: 16px;">
-	            {{-- post --}}
-	            <h5 class="green-text" style="font-weight: bold; margin-bottom: 0px;">{{$discussion->user->first_name.' '.$discussion->user->last_name}}</h5>
-	            @php
-	                $time = new App\Http\Controllers\TimeForHumans; 
-	            @endphp
-	            <p style="margin-top: 0; font-size: 11px;" class="color-text-o"><p>
-	            <div style="font-size: 14px;" class="color-text">
-	                halo kak  
-	            </div>
+            {{-- post --}}
+            <h5 class="green-text" style="font-weight: bold; margin-bottom: 0px;">{{$discussion->user->first_name.' '.$discussion->user->last_name}}</h5>
+            @php
+                $time = new App\Http\Controllers\TimeForHumans; 
+            @endphp
+            <p style="margin-top: 0; font-size: 11px;" class="color-text-o"><p>
+            <div style="font-size: 14px;" class="color-text">
+                {{ $discussion->topic }} 
+            </div>
 
-	            {{-- comment and like icon --}}
-	            <div style="margin-top: 30px;" class="action-icon">
-	                <span class="color-text fa fa-comment-o" id="comment-icon" onclick="toggle_comment(1)" style="cursor: pointer;"></span>
-	                <span class="color-text fa " id="like-icon" onclick="like()" style="cursor: pointer;"></span>
-	                <span id="like" class="color-text"></span>
-	                {{-- <script type="text/javascript">
-	                    window.setInterval(function(){
-	                        loadComment({{ $post->id }})
-	                    }, 5000);
-	                </script>     --}}
-	            </div>  
-	            {{-- post --}}
+            {{-- comment icon --}}
+            <div style="margin-top: 30px;" class="action-icon">
+                <span class="color-text fa fa-comment-o" id="comment-icon" onclick="toggle_comment({{ $discussion->id}})" style="cursor: pointer;"></span>
+            </div>
 	        </div>
 	        <div class="card-footer bg-light">
-	            <div class="row" id="toggle-comment1" style="display: none;">
+	            <div class="row" id="toggle-comment{{ $discussion->id}}" style="display: none;">
 	        		<div class="col-sm-11">
-	        			<input id="comment" type="text" name="comment" class="form-control" placeholder="komentar disini.." style="border-style: none;">
+	        			<input id="comment{{ $discussion->id }}" type="text" class="form-control" placeholder="komentar disini.." style="border-style: none;">
 	        		</div>
 	        		<div class="col-sm-1">
-	                    <span class="la la-paper-plane color-text pull-right" style="font-size: 35px; cursor: pointer;" onclick="sendComment()"></span>
+	              <span class="la la-paper-plane color-text pull-right" style="font-size: 35px; cursor: pointer;" onclick="sendComment({{$discussion->id}})"></span>
 	        		</div>
 	            </div>
 
-	          	<div class="row col-sm-12" style="padding-top: 20px;" id="comments">
+	          	<div class="row col-sm-12" style="padding-top: 20px;" id="comments{{ $discussion->id }}">
 	          		
 	          	</div>
+	          	<script type="text/javascript">
+                  window.setInterval(function(){
+                      load_comment({{ $adventure->id }}, {{ $discussion->id }})
+                  }, 5000);
+              </script>  
 	        </div>
 	    </div>
     @endforeach
@@ -263,6 +274,24 @@
 			error: function(){
 
 			}
+		})
+	}
+
+	function sendComment(id){
+		var url = "/adventure/"+id+"/discussions/send-comment";
+		var token = "{{csrf_token()}}";
+		var user_login = {{Auth::user()->id}};
+		var message = $('#comment'+id).val();
+		
+
+		$.post(url, {
+			message: message,
+			_token: token,
+			user_id: user_login,
+			id: id
+		}, function(data){
+			load_comment({{$adventure->id}}, id);
+			$('#comment'+id).val('');
 		})
 	}
 </script>

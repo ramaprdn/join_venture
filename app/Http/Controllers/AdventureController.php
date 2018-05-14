@@ -110,10 +110,10 @@ class AdventureController extends Controller
 
         $discussions = Discussion::with('user')
             ->where('adventure_id', $id)
+            ->orderBy('id', 'desc')
             ->get();
 
-        // return $discussions;
-        // return $user_status_to_adventure;
+        
         return view('adventure.detail', compact('adventure', 'partisipants', 'partisipants_count', 'user_status_to_adventure', 'discussions'));
     }
 

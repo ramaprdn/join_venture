@@ -37,3 +37,5 @@ Route::get('/post/like/{post_id}/count', 'PostController@whoLikeThisPost');
 Route::get('/adventure/{adventure_id}/join', 'AdventureController@join_this')->name('adventure.join');
 Route::get('/adventure/{adventure_id}/partisipant', 'AdventureController@get_partisipants');
 Route::resource('/adventure/{id}/discussion', 'DiscussionController');
+Route::post('/adventure/{id}/discussions/send-comment', 'DiscussionController@send_comment');
+Route::get('/adventure/{id}/discussions/{disc_id}/load-comment', 'DiscussionController@load_comment')->name('load-disc-comment');

@@ -4,7 +4,7 @@
 
 @foreach($comments as $comment)
 	<div class="col-sm-1">
-		<div style="height: 40px; width: 40px; border-radius: 30px; background-color: #ccc">
+		<div style="height: 40px; width: 40px; border-radius: 30px; background-image: url('{{asset('img/users/' . $comment->user->img_profile)}}'); background-size: 100% 100%; background-repeat: no-repeat; ">
 		</div>
 	</div>
 	<div class="col-sm-11">

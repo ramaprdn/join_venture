@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Discussion;
 use Illuminate\Http\Request;
 use Auth;
+use App\AdventureComment;
+use DB;
 
 class DiscussionController extends Controller
 {
@@ -96,5 +98,24 @@ class DiscussionController extends Controller
     public function destroy(Discussion $discussion)
     {
         //
+    }
+
+    public function send_comment(Request $request){
+        
+        $new_comment = new AdventureComment;
+        $new_comment->user_id = $request->user_id;
+        $new_comment->discussion_id = $request->id;
+        $new_comment->comment = $request->message;
+        $new_comment->save();
+
+        return 'sukses';
+
+    }
+
+    public function load_comment($id, $disc_id){
+        $comments = AdventureComment::where('discussion_id', $disc_id)
+            ->with('user')
+            ->get();
+        return view('ajax.comment.load', compact('comments'));
     }
 }
