@@ -76,40 +76,6 @@
                 
 				<div class="card-body">
 					<br>
-                    <div class="row">
-	                	<div class="col-3 px-0 text-center grey-text">
-	                		<div>
-	                			<small><b>Story</b></small>
-	                		</div>
-	                		<div>
-	                			<small class="green-text">10</small>
-	                		</div>
-	                	</div>
-	                	<div class="col-3 px-0 text-center grey-text">
-	                		<div>
-	                			<small><b>Followers</b></small>
-	                		</div>
-	                		<div>
-	                			<small class="green-text">100.5k</small>
-	                		</div>
-	                	</div>
-	                	<div class="col-3 px-0 text-center grey-text">
-	                		<div>
-	                			<small><b>Following</b></small>
-	                		</div>
-	                		<div>
-	                			<small class="green-text">1500</small>
-	                		</div>
-	                	</div>
-	                	<div class="col-3 px-0 text-center grey-text">
-	                		<div>
-	                			<small><b>Event</b></small>
-	                		</div>
-	                		<div>
-	                			<small class="green-text">10</small>
-	                		</div>
-	                	</div>
-	                </div>
 	                <br>
 	                <div class="d-flex justify-content-center">
 	                	<div class="image-upload">

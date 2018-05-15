@@ -60,9 +60,9 @@
                         <li class="nav-item @yield('adventure') mx-2">
                             <a class="nav-link" href="/adventure/create">Create Adventure</a>
                         </li>
-                        <li class="nav-item mx-2">
+                        {{-- <li class="nav-item mx-2">
                             <a class="nav-link" href="#">Help</a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link" href="#">Hai, {{ Auth::user()->first_name }}!</a>
                         </li>

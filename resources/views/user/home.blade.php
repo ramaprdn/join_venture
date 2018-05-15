@@ -194,11 +194,153 @@ active
                 <div style="position: absolute;">
                     <img class="rounded-circle image-profile" src="img/users/{{ Auth::user()->img_profile }}" style="background-color: #CCC">
                 </div>
+                <div style="position: absolute;">
+                    <div style="width: 250px; margin-left: 120px; margin-top: 100px;">
+                        <div class="green-text">
+                            <br>
+                            <h5><b>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</b></h5>
+                            <small class="color-text">"Living Like Larry"</small>                       
+                        </div>
+                    </div>
+                    
+                </div>
+                <br>
                 <div class="card-body">
+                    <br>
+                    <br>
+                    <div class="row">
+                        {{-- Stories --}}
+                        <div class="col-3 px-0 text-center grey-text">
+                            <div>
+                                <a href=""><small><b>Stories</b></small></a>
+                            </div>
+                            <div>
+                                <small class="grey-text">{{count($post)}}</small>
+                            </div>
+                        </div>
+
+                        {{-- Followers --}}
+                        <div class="col-3 px-0 text-center grey-text">
+                            <div>
+                                <a href="" data-toggle="modal" data-target="#followersModal"><small><b>Pengikut</b></small></a>
+                            </div>
+                            <div>
+                                <small class="grey-textt">{{count($followers)}}</small>
+                            </div>
+                            <div class="modal fade" id="followersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Pengikut</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-left vertical-scroll-wrapper">
+                                        @if(count($followers) > 0)
+                                            @foreach($followers as $follower)
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <a href=""><h6>{{ $follower->first_name." ".$follower->last_name }}</h6></a>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        {{-- <button class="btn buttonRounded pull-right" type="button">Follow</button> --}}
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            @endforeach
+                                        @else
+                                            <h6>Belum ada orang yang mengikuti</h6>
+                                        @endif
+                                        </div>
+                                        <div class="modal-footer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Following --}}
+                        <div class="col-3 px-0 text-center grey-text">
+                            <div>
+                                <a href="" data-toggle="modal" data-target="#followingModal"><small><b>Mengikuti</b></small></a>
+                            </div>
+                            <div>
+                                <small class="grey-text">{{count($following)}}</small>
+                            </div>
+                            <div class="modal fade" id="followingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Mengikuti</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-left vertical-scroll-wrapper">
+                                        @if(count($following) > 0)
+                                            @foreach($following as $following)
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <a href=""><h6>{{ $following->first_name." ".$following->last_name }}</h6></a>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        {{-- <button class="btn buttonRounded pull-right" type="button">Unfollow</button> --}}
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            @endforeach
+                                        @else
+                                            <h6>Belum ada orang yang diikuti</h6>
+                                        @endif
+                                        </div>
+                                        <div class="modal-footer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Adventure --}}
+                        <div class="col-3 px-0 text-center grey-text">
+                            <div>
+                                <a href="" data-toggle="modal" data-target="#adventureModal"><small><b>Petualangan</b></small></a>
+                            </div>
+                            <div>
+                                <small class="grey-text">{{count($user_adventure)}}</small>
+                            </div>
+                            <div class="modal fade" id="adventureModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Petualanganmu</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-left vertical-scroll-wrapper">
+                                        @if(count($user_adventure) > 0)
+                                            @foreach($user_adventure as $adventure)
+                                                <div>
+                                                    <a href="{{ route('adventure.show', $adventure->id) }}">{{ $adventure->adventure_name }}</a>
+                                                </div>
+                                                <hr>
+                                            @endforeach
+                                        @else
+                                            <div>
+                                                <p>Belum ada petualangan yang diikuti</p>   
+                                            </div>
+                                        @endif
+                                        </div>
+                                        <div class="modal-footer">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="green-text">
                         <br>
-                        <h5><b>{{Auth::user()->first_name.' '.Auth::user()->last_name}}</b></h5>
-                        <small class="color-text">"Living Like Larry"</small>
                         <div class="text-right">
                             <a href="{{ route('profile')}}"><i class="fa fa-cog" aria-hidden="true" style="font-size: 2.5em; width: 20px;"></i></a>
                         </div>                       
