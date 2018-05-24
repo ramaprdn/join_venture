@@ -156,23 +156,24 @@ class AdventureController extends Controller
             ->where('adventure_id', $id)
             ->first();
 
-        // return $is_join;
 
-        if ( $is_join->status == 1) {
-            $partisipant = Partisipant::find($is_join->id);
-            $partisipant->status = 0;
-            $partisipant->save();
-            
-        }else if($is_join->status == 0){
-            $partisipant = Partisipant::find($is_join->id);
-            $partisipant->status = 1;
-            $partisipant->save();
-            
-        }else{
+        if (empty($is_join)) {
             $partisipant = new Partisipant;
             $partisipant->user_id = Auth::user()->id;
             $partisipant->adventure_id = $id;
             $partisipant->save();
+        }else{
+            if ( $is_join->status == 1) {
+                $partisipant = Partisipant::find($is_join->id);
+                $partisipant->status = 0;
+                $partisipant->save();
+                
+            }else if($is_join->status == 0){
+                $partisipant = Partisipant::find($is_join->id);
+                $partisipant->status = 1;
+                $partisipant->save();
+                
+            }
         }
 
         return redirect('/adventure/'.$id);
